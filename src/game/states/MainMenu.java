@@ -30,38 +30,29 @@ public class MainMenu extends GameState {
 
 	@Override
 	public void render(Graphics graphics) {
-		///graphics for mainMenu
 		drawBackground(graphics);
 		drawButtons(graphics);
 		drawOptions(graphics);
 	}
 
-	// work with keys up -> and down <-, (PgUp, PgDn) ;
-
 	@Override
 	public void keyPressed(int key) {
-		if(key == KeyEvent.VK_UP){
-			if( selected < 3 ){
+		if(key == KeyEvent.VK_DOWN){
+			if( selected < 3 )
 				selected ++ ;
-			} else {
-				selected = 0 ;
-			}
-		} else if(key == KeyEvent.VK_DOWN){
-			if(selected > 0){
+			else selected = 0 ;
+		} else if(key == KeyEvent.VK_UP){
+			if(selected > 0)
 				selected -- ;
-			} else {
-				selected = 3;
-			}
+			else selected = 3;
 		}else if(key == KeyEvent.VK_ENTER){
-			if(selected == 0){
+			if(selected == 0)
 				Game.STATE_MANAGER.changeState(new PlayingState());
-			} else if(selected == 1){
+			else if(selected == 1)
 				Game.STATE_MANAGER.changeState(new Info());
-			}else if(selected == 2){
+			else if(selected == 2)
 				Game.STATE_MANAGER.changeState(new HighscoresMenu());
-			}else{
-				System.exit(0);
-			}
+			else System.exit(0);
 		}
 	}
 
@@ -69,21 +60,29 @@ public class MainMenu extends GameState {
 	public void keyReleased(int key) {}
 
 	private void drawBackground(Graphics graphics) {
-		graphics.setColor(new Color(149, 38, 38));
-		graphics.fillRect(0,0, Window.getHeight(), Window.getWidth());
+		graphics.setColor(new Color(54, 51, 51));
+		graphics.fillRect(0,0, Window.getWidth(), Window.getHeight());
 	}
 	private void drawOptions(Graphics graphics) {
 		graphics.setColor(Color.WHITE);
-		graphics.setFont(new Font("Arial", Font.PLAIN, 20));
+		graphics.setFont(new Font("Roboto", Font.PLAIN + Font.ITALIC, 25));
 		for(int i = 0; i < options.length; i ++ ){
 			if(selected == i){
 				graphics.setColor(Color.GREEN);
 			} else {
 				graphics.setColor(Color.WHITE);
 			}
-			graphics.drawString(options[i], Window.getWidth()/4, 190 + 100 * i);
+			drawCenteredString(options[i], Window.WIDTH, Window.HEIGHT, graphics, i) ;
 		}
 	}
+
+	private void drawCenteredString(String option, int width, int height, Graphics graphics, int diffBetweenLines) {
+		FontMetrics fm = graphics.getFontMetrics() ;
+		int x = (width - fm.stringWidth(option)) / 2 ;
+		int y = (fm.getAscent() + (200 + 200 * diffBetweenLines - (fm.getAscent() + fm.getDescent())) / 2);
+		graphics.drawString(option, x, y);
+	}
+
 	private void drawButtons(Graphics graphics) {
 
 	}

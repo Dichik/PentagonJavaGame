@@ -28,20 +28,19 @@ public class GameScreen extends JPanel {
 	}
 	
 	private static class Keyboard implements KeyListener {
-
 		@Override
-		public void keyTyped(KeyEvent e) {
-
+		public void keyPressed(KeyEvent key) {
+			if(Game.isRunning()){
+				Game.STATE_MANAGER.keyPressed(key.getKeyCode());
+			}
 		}
-
 		@Override
-		public void keyPressed(KeyEvent e) {
-
+		public void keyReleased(KeyEvent key) {
+			if(Game.isRunning()){
+				Game.STATE_MANAGER.keyReleased(key.getKeyCode());
+			}
 		}
-
 		@Override
-		public void keyReleased(KeyEvent e) {
-
-		}
+		public void keyTyped(KeyEvent key){}
 	}
 }
