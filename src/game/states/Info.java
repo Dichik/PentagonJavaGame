@@ -1,8 +1,10 @@
 package game.states;
 
 import framework.gamestates.GameState;
+import game.Game;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Info extends GameState {
 
@@ -29,7 +31,9 @@ public class Info extends GameState {
 
     @Override
     public void keyPressed(int key) {
-
+        if(key == KeyEvent.VK_ESCAPE){
+            Game.STATE_MANAGER.backToPrevious();
+        }
     }
 
     @Override

@@ -77,7 +77,8 @@ public class HighestScoreMenu extends GameState{
 									Graphics graphics, double diffBetweenLines) {
 		FontMetrics fm = graphics.getFontMetrics() ;
 		int x = (width - fm.stringWidth(option)) / 2 ;
-		double y = (fm.getAscent() + (20 + 100 * diffBetweenLines - (fm.getAscent() + fm.getDescent())) / 2);
+		double y = (fm.getAscent() + (20 + 100 * diffBetweenLines -
+				(fm.getAscent() + fm.getDescent())) / 2);
 		graphics.drawString(option, x, (int) y);
 	}
 }
