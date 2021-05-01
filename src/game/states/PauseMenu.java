@@ -7,15 +7,12 @@ import java.awt.event.KeyEvent;
 
 public class PauseMenu extends MainMenu {
 
-	private String[] options = {
-		"Continue",
-		"To Menu"
-	};
-	private int selected ;
-
 	@Override
 	protected void init() {
-		selected = 0 ;
+		this.options = new String[]{
+				"Continue",
+				"To Menu"
+		};
 	}
 
 	@Override
@@ -26,17 +23,18 @@ public class PauseMenu extends MainMenu {
 	@Override
 	public void keyPressed(int key) {
 		if(key == KeyEvent.VK_DOWN){
-			if(selected < 1)
+			if(selected < options.length - 1)
 				selected ++ ;
 			else selected = 0 ;
 		} else if(key == KeyEvent.VK_UP){
 			if(selected > 0)
 				selected -- ;
-			else selected = 1;
+			else selected = options.length - 1;
 		} else if(key == KeyEvent.VK_ENTER){
 			if(selected == 0){
 				Game.STATE_MANAGER.backToPrevious();
 			} else {
+				Game.STATE_MANAGER.clearStack();
 				Game.STATE_MANAGER.changeState(new MainMenu());
 			}
 		} else if(key == KeyEvent.VK_ESCAPE){

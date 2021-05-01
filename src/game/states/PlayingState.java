@@ -29,7 +29,7 @@ public class PlayingState extends GameState {
 	@Override
 	public void keyPressed(int key) {
 		if(key == KeyEvent.VK_ESCAPE){
-			Game.STATE_MANAGER.backToPrevious();
+			Game.STATE_MANAGER.changeState(new PauseMenu());
 		}
 	}
 
