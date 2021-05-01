@@ -11,37 +11,37 @@ import java.awt.event.ActionListener;
 
 public class Game {
 
-	public static final GameStateManager STATE_MANAGER = new GameStateManager();
-	private static boolean running = false ;
-	private static Timer timer;
+    public static final GameStateManager STATE_MANAGER = new GameStateManager();
+    private static boolean running = false;
+    private static Timer timer;
 
-	public static void main(String[] args) {
-		System.out.println("[Game][Main]: Starting...");
-		
-		ResourceManager.readImageFiles();
-		Window.create();
-		
-		startGame();
-		System.out.println("[Game][Main]: Started!");
-	}
+    public static void main(String[] args) {
+        System.out.println("[Game][Main]: Starting...");
 
-	private static void startGame() {
-		STATE_MANAGER.changeState(new MainMenu());
-		timer = new Timer(20, new GameLoop());
-		running = true;
-		timer.start();
-	}
+        ResourceManager.readImageFiles();
+        Window.create();
 
-	public static boolean isRunning(){
-		return running ;
-	}
+        startGame();
+        System.out.println("[Game][Main]: Started!");
+    }
 
-	private static class GameLoop implements ActionListener {
+    private static void startGame() {
+        STATE_MANAGER.changeState(new MainMenu());
+        timer = new Timer(20, new GameLoop());
+        running = true;
+        timer.start();
+    }
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Game.STATE_MANAGER.tick();
-		}
+    public static boolean isRunning() {
+        return running;
+    }
 
-	}
+    private static class GameLoop implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Game.STATE_MANAGER.tick();
+        }
+
+    }
 }

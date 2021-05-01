@@ -8,10 +8,10 @@ import java.awt.event.KeyEvent;
 
 public class Info extends GameState {
 
-    private int selected ;
+    private int selected;
 
-    public Info(){
-        selected = 0 ;
+    public Info() {
+        selected = 0;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Info extends GameState {
 
     @Override
     public void keyPressed(int key) {
-        if(key == KeyEvent.VK_ESCAPE){
+        if (key == KeyEvent.VK_ESCAPE) {
             Game.STATE_MANAGER.backToPrevious();
         }
     }
