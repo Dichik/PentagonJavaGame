@@ -6,13 +6,11 @@ public class Square {
     private boolean fixed;
 
     private boolean stopping;
-    private int stopTime;
 
     public Square(String color) {
         this.color = color;
-        this.fixed = false;
-        this.stopping = false;
-        this.stopTime = 0;
+        fixed = false;
+        stopping = false;
     }
 
     public boolean isFixed() {
@@ -20,22 +18,15 @@ public class Square {
     }
 
     public void setFixed() {
-        if (this.stopping)
-            this.stopTime++;
-
-        if (stopTime == 5) {
-            this.fixed = true;
-            this.stopTime = 0;
-        }
+        fixed = true;
     }
 
     public void setStopping() {
-        this.stopping = true;
+        stopping = true;
     }
 
     public void resetStopTime() {
-        this.stopTime = 0;
-        this.stopping = false;
+        stopping = false;
     }
 
     public boolean isStopping() {
@@ -43,14 +34,10 @@ public class Square {
     }
 
     public void setNotFixed() {
-        this.fixed = false;
+        fixed = false;
     }
 
     public String getColor() {
         return color;
-    }
-
-    public void forceFix() {
-        this.fixed = true;
     }
 }

@@ -38,38 +38,38 @@ public class PlayingState extends GameState {
 
     @Override
     protected void init() {
-        this.grid = new Grid();
+        grid = new Grid();
 
-        this.queue = new ArrayBlockingQueue<>(4);
-        this.queue.add(Pentamimo.LIST.get(randomInt(Pentamimo.LIST.size())));
-        this.queue.add(Pentamimo.LIST.get(randomInt(Pentamimo.LIST.size())));
-        this.queue.add(Pentamimo.LIST.get(randomInt(Pentamimo.LIST.size())));
+        queue = new ArrayBlockingQueue<>(4);
+        queue.add(Pentamimo.LIST.get(randomInt(Pentamimo.LIST.size())));
+        queue.add(Pentamimo.LIST.get(randomInt(Pentamimo.LIST.size())));
+        queue.add(Pentamimo.LIST.get(randomInt(Pentamimo.LIST.size())));
 
-        this.placePentamimo();
+        placePentamimo();
 
-        this.hold = null;
+        hold = null;
 
-        this.lost = false;
+        lost = false;
 
         System.out.println("[Game][States]: Created playing state");
     }
 
     @Override
     public void tick() {
-        if (!this.lost) {
-            this.stopPieces();
-            this.nextPiece();
+        if (!lost) {
+            stopPieces();
+            nextPiece();
         }
     }
 
     @Override
     public void render(Graphics graphics) {
-        this.drawBackground(graphics);
-        this.drawGrid(graphics);
-        this.drawQueue(graphics);
+        drawBackground(graphics);
+        drawGrid(graphics);
+        drawQueue(graphics);
 
-        if (this.lost)
-            this.drawGameOverMessage(graphics);
+        if (lost)
+            drawGameOverMessage(graphics);
     }
 
     @Override
@@ -79,24 +79,24 @@ public class PlayingState extends GameState {
          * because when we use keys it makes lots of collapse and troubles.
          */
         if (key == KeyEvent.VK_RIGHT) {
-            if (this.grid.allSquaresCanGoRight() && !lost) {
-                this.grid.movePiecesRight();
-                this.currentRotationOriginX++;
+            if (grid.allSquaresCanGoRight() && !lost) {
+                grid.movePiecesRight();
+                currentRotationOriginX++;
             }
         } else if (key == KeyEvent.VK_LEFT) {
-            if (this.grid.allSquaresCanGoLeft() && !lost) {
-                this.grid.movePiecesLeft();
-                this.currentRotationOriginX--;
+            if (grid.allSquaresCanGoLeft() && !lost) {
+                grid.movePiecesLeft();
+                currentRotationOriginX--;
             }
         } else if (key == KeyEvent.VK_DOWN) {
-            if (this.grid.allSquaresCanFall() && !lost) {
-                this.grid.movePiecesDown();
-                this.currentRotationOriginY++;
+            if (grid.allSquaresCanFall() && !lost) {
+                grid.movePiecesDown();
+                currentRotationOriginY++;
             }
         } else if (key == KeyEvent.VK_UP) {
-            if (this.grid.allSquaresCanGoUP() && !lost) {
-                this.grid.movePiecesUp();
-                this.currentRotationOriginY--;
+            if (grid.allSquaresCanGoUP() && !lost) {
+                grid.movePiecesUp();
+                currentRotationOriginY--;
             }
         } else if (key == KeyEvent.VK_ESCAPE) {
             if (!lost) {
@@ -123,8 +123,8 @@ public class PlayingState extends GameState {
         for (int i = 0; i < Grid.LINES; i++) {
             for (int j = 0; j < Grid.LINES_SIZE; j++) {
                 if (this.grid.getLine(i)[j] != null) {
-                    if (this.grid.getLine(i)[j].isStopping()) {
-                        this.grid.getLine(i)[j].setFixed();
+                    if (grid.getLine(i)[j].isStopping()) {
+                        grid.getLine(i)[j].setFixed();
                     }
                 }
             }
@@ -132,8 +132,8 @@ public class PlayingState extends GameState {
     }
 
     private void nextPiece() {
-        if (this.grid.allSquaresAreFixed()) {
-            this.placePentamimo();
+        if (grid.allSquaresAreFixed()) {
+            placePentamimo();
         }
     }
 
@@ -151,7 +151,7 @@ public class PlayingState extends GameState {
     private void drawGrid(Graphics graphics) {
         for (int i = 2; i < Grid.LINES; i++) {
             for (int j = 0; j < Grid.LINES_SIZE; j++) {
-                Square square = this.grid.getLine(i)[j];
+                Square square = grid.getLine(i)[j];
                 if (square != null) {
                     if (!square.isFixed())
                         graphics.drawImage(ResourceManager.texture("block_" + square.getColor() + ".png"),
@@ -170,7 +170,7 @@ public class PlayingState extends GameState {
 
     private void drawQueue(Graphics graphics) {
         int count = 0;
-        for (Pentamimo p : this.queue) {
+        for (Pentamimo p : queue) {
             for (int i = 0; i < p.getSize(); i++) {
                 for (int j = 0; j < p.getSize(); j++) {
                     Square square = p.getSquareAt(Pentamimo.Rotation.ROT0, i, j);
@@ -181,10 +181,10 @@ public class PlayingState extends GameState {
             }
             count++;
         }
-        if (this.hold != null) {
-            for (int i = 0; i < this.hold.getSize(); i++) {
-                for (int j = 0; j < this.hold.getSize(); j++) {
-                    Square square = this.hold.getSquareAt(Pentamimo.Rotation.ROT0, i, j);
+        if (hold != null) {
+            for (int i = 0; i < hold.getSize(); i++) {
+                for (int j = 0; j < hold.getSize(); j++) {
+                    Square square = hold.getSquareAt(Pentamimo.Rotation.ROT0, i, j);
                     if (square != null)
                         graphics.drawImage(ResourceManager.texture("block_" + square.getColor() + ".png"),
                                 520 + j * 30, 340 + i * 30, 30, 30, null);
@@ -216,13 +216,13 @@ public class PlayingState extends GameState {
     }
 
     private void rotateClockwise() {
-        this.fixRotationOrigin();
+        fixRotationOrigin();
 
-        if (this.grid.canPlaceHere(currentPentamimo, currentRotationOriginX,
+        if (grid.canPlaceHere(currentPentamimo, currentRotationOriginX,
                 currentRotationOriginY, currentRotation.rotateClockwise())) {
             //this.grid.removeTetromino();
-            this.currentRotation = this.currentRotation.rotateClockwise();
-            this.grid.placeTetromino(currentPentamimo, currentRotationOriginX,
+            currentRotation = currentRotation.rotateClockwise();
+            grid.placeTetromino(currentPentamimo, currentRotationOriginX,
                     currentRotationOriginY, currentRotation);
         }
     }
