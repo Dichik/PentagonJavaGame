@@ -49,9 +49,9 @@ public class MainMenu extends GameState {
 			if(selected == 0)
 				Game.STATE_MANAGER.changeState(new PlayingState());
 			else if(selected == 1)
-				Game.STATE_MANAGER.changeState(new Info());
+				Game.STATE_MANAGER.changeState(new HighestScoreMenu());
 			else if(selected == 2)
-				Game.STATE_MANAGER.changeState(new HighscoresMenu());
+				Game.STATE_MANAGER.changeState(new Info());
 			else System.exit(0);
 		}
 	}
