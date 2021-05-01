@@ -3,9 +3,7 @@ package game.pieces;
 import java.util.ArrayList;
 
 public class Pentamimo {
-
 	public static final ArrayList<Pentamimo> LIST = new ArrayList<>();
-
 
 	private int[][] blocksPositions;
 	

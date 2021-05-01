@@ -10,8 +10,6 @@ public abstract class GameState {
 
 	protected abstract void init();
 
-	public abstract void tick();
-
 	public abstract void render(Graphics graphics);
 
 	public abstract void keyPressed(int key);

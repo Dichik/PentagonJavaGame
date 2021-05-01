@@ -9,6 +9,10 @@ public class PauseMenu extends MainMenu {
 
 	@Override
 	protected void init() {
+		/**
+		 * maybe add option to save the game stage
+		 * it means we can start the game from the saved stage -> a bit difficult
+		 */
 		this.options = new String[]{
 				"Continue",
 				"To Menu"
@@ -22,6 +26,11 @@ public class PauseMenu extends MainMenu {
 
 	@Override
 	public void keyPressed(int key) {
+
+		/**
+		 * when we go to menu, there should be a message
+		 * about unsaved results of the current game
+		*/
 		if(key == KeyEvent.VK_DOWN){
 			if(selected < options.length - 1)
 				selected ++ ;

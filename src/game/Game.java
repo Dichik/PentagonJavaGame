@@ -1,8 +1,5 @@
 package game;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import framework.display.Window;
 import framework.gamestates.GameStateManager;
 import framework.resources.ResourceManager;
@@ -31,12 +28,5 @@ public class Game {
 
 	public static boolean isRunning(){
 		return running ;
-	}
-
-	private static class GameLoop implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Game.STATE_MANAGER.tick();
-		}
 	}
 }

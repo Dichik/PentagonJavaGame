@@ -18,8 +18,11 @@ public class ResourceManager {
 	private static final HashMap<String, BufferedImage> TEXTURES = new HashMap<>();
 
 	public static void readImageFiles() {
-
-		//System.out.println("[Framework][Resources]: Finished reading image files");
+		File texturesFolder = new File("res/images");
+		for(File imgFile : texturesFolder.listFiles()) {
+			TEXTURES.put(imgFile.getName(), getImageFromFile(imgFile));
+		}
+		System.out.println("[Framework][Resources]: Finished reading image files");
 	}
 
 	public static BufferedImage texture(String name) {
@@ -40,5 +43,13 @@ public class ResourceManager {
 		}
 		return scores ;
 	}
-
+	private static BufferedImage getImageFromFile(File file) {
+		try {
+			return ImageIO.read(file);
+		} catch (IOException e) {
+			System.err.println("[Framework][Resources]: Exception loading "+file.getName());
+			System.exit(-1);
+			return null;
+		}
+	}
 }

@@ -28,10 +28,6 @@ public class GameStateManager {
 		gameStackStates.peek().init() ;
 	}
 
-	public void tick() {
-		gameStackStates.peek().tick() ;
-	}
-
 	public void render(Graphics graphics) {
 		gameStackStates.peek().render(graphics);
 	}

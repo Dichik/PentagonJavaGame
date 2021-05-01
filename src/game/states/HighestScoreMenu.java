@@ -31,9 +31,6 @@ public class HighestScoreMenu extends GameState{
 	}
 
 	@Override
-	public void tick() {}
-
-	@Override
 	public void render(Graphics graphics) {
 		drawBackground(graphics);
 		drawScores(graphics);
