@@ -77,6 +77,19 @@ public class Grid {
 			}
 			return true;
 		}
+		public boolean allSquaresAreFixed() {
+		for(int i=0;i<Grid.LINES;i++) {
+			for(int j=0;j<Grid.LINES_SIZE;j++) {
+				if(this.singlePieces[i][j] != null) {
+					if(!this.singlePieces[i][j].isFixed()) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 		public void movePiecesDown() {
 			for(int i=Grid.LINES-2;i>=0;i--) {
 				for(int j=0;j<Grid.LINES_SIZE;j++) {
@@ -90,7 +103,7 @@ public class Grid {
 			}
 		}
 		public void movePiecesUp() {
-			for(int i = 0;i < Grid.LINES - 1; i++ ) {
+			for(int i = 0;i < Grid.LINES; i++ ) {
 				for(int j=0;j<Grid.LINES_SIZE;j++) {
 					if(this.singlePieces[i][j] != null) {
 						if(!this.singlePieces[i][j].isFixed()) {
@@ -128,59 +141,17 @@ public class Grid {
 			}
 		}
 		public void setAllSquaresToBeStopped() {
-			for(int i=Grid.LINES-1;i>=0;i--) {
-				for(int j=0;j<Grid.LINES_SIZE;j++) {
-					if(this.singlePieces[i][j] != null) {
-						if(!this.singlePieces[i][j].isFixed() && !this.singlePieces[i][j].isStopping()) {
+			for(int i = Grid.LINES - 1 ; i >= 0; i-- ){
+				for(int j = 0; j < Grid.LINES_SIZE; j ++){
+					if(this.singlePieces[i][j] != null){
+						if(!this.singlePieces[i][j].isFixed() && !this.singlePieces[i][j].isStopping()){
 							this.singlePieces[i][j].setStopping();
 						}
 					}
 				}
 			}
 		}
-		public boolean allSquaresAreFixed() {
-			for(int i=0;i<Grid.LINES;i++) {
-				for(int j=0;j<Grid.LINES_SIZE;j++) {
-					if(this.singlePieces[i][j] != null) {
-						if(!this.singlePieces[i][j].isFixed()) {
-							return false;
-						}
-					}
-				}
-			}
-			return true;
-		}
-		public void removeLine(int line) {
-			for(int i=0;i<Grid.LINES_SIZE;i++) {
-				this.singlePieces[line][i] = null;
-			}
-			for(int i=line;i>=0;i--) {
-				for(int j=0;j<Grid.LINES_SIZE;j++) {
-					if(this.singlePieces[i][j] != null) {
-						this.singlePieces[i][j].setNotFixed();
-					}
-				}
-			}
-		}
-		public void removeTetromino() {
-			for(int i=0;i<Grid.LINES;i++) {
-				for(int j=0;j<Grid.LINES_SIZE;j++) {
-					if(this.singlePieces[i][j] != null) {
-						if(!this.singlePieces[i][j].isFixed()) {
-							this.singlePieces[i][j] = null;
-						}
-					}
-				}
-			}
-		}
 
-		/**Checks if the given tetromino can be placed at the given position
-		 * @param tetromino - The tetromino to place
-		 * @param locationX - The position where it should be placed
-		 * @param locationY - The position where it should be placed
-		 * @param rotation - Its rotation
-		 * @return True if the tetromino can be placed here, false if that spot is already occupied
-		 */
 		public boolean canPlaceHere(Pentamimo tetromino, int locationX, int locationY, Pentamimo.Rotation rotation) {
 			for(int i=0;i<tetromino.getSize();i++) {
 				for(int j=0;j<tetromino.getSize();j++) {
