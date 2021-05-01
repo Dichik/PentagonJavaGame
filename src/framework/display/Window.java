@@ -21,4 +21,5 @@ public class Window {
 	public static int getHeight(){
 		return HEIGHT ;
 	}
+
 }

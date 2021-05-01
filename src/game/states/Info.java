@@ -20,6 +20,11 @@ public class Info extends GameState {
     }
 
     @Override
+    public void tick() {
+
+    }
+
+    @Override
     public void render(Graphics graphics) {
 
     }
