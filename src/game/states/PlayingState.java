@@ -208,7 +208,7 @@ public class PlayingState extends GameState {
             currentPentamimo = queue.poll();
             currentRotationOriginX = 3;
             currentRotation = Pentamimo.Rotation.ROT0;
-            grid.placeTetromino(currentPentamimo, 0, 2, currentRotation);
+            grid.placePentamimo(currentPentamimo, 0, 2, currentRotation);
             queue.add(Pentamimo.LIST.get(randomInt(Pentamimo.LIST.size())));
         } catch (ArrayIndexOutOfBoundsException e) {
             lost = true;
@@ -222,7 +222,7 @@ public class PlayingState extends GameState {
                 currentRotationOriginY, currentRotation.rotateClockwise())) {
             //this.grid.removeTetromino();
             currentRotation = currentRotation.rotateClockwise();
-            grid.placeTetromino(currentPentamimo, currentRotationOriginX,
+            grid.placePentamimo(currentPentamimo, currentRotationOriginX,
                     currentRotationOriginY, currentRotation);
         }
     }
@@ -234,7 +234,7 @@ public class PlayingState extends GameState {
                 currentRotationOriginY, currentRotation.rotateCounterclockwise())) {
             //this.grid.removeTetromino();
             currentRotation = currentRotation.rotateCounterclockwise();
-            grid.placeTetromino(currentPentamimo, currentRotationOriginX,
+            grid.placePentamimo(currentPentamimo, currentRotationOriginX,
                     currentRotationOriginY, currentRotation);
         }
     }

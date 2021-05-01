@@ -9,11 +9,11 @@ public class Grid {
         this.singlePieces = new Square[LINES][LINES_SIZE];
     }
 
-    public void placeTetromino(Pentamimo tetromino, int locationX, int locationY, Pentamimo.Rotation rotation) {
-        for (int i = 0; i < tetromino.getSize(); i++) {
-            for (int j = 0; j < tetromino.getSize(); j++) {
-                if (tetromino.getSquareAt(rotation, i, j) != null) {
-                    this.singlePieces[locationY + i][locationX + j] = tetromino.getSquareAt(rotation, i, j);
+    public void placePentamimo(Pentamimo pentamimo, int locationX, int locationY, Pentamimo.Rotation rotation) {
+        for (int i = 0; i < pentamimo.getSize(); i++) {
+            for (int j = 0; j < pentamimo.getSize(); j++) {
+                if (pentamimo.getSquareAt(rotation, i, j) != null) {
+                    this.singlePieces[locationY + i][locationX + j] = pentamimo.getSquareAt(rotation, i, j);
                 }
             }
         }
@@ -23,12 +23,6 @@ public class Grid {
         return singlePieces[i];
     }
 
-    /**
-     * Iterates through all squares in the grid<br>
-     * Checks if all squares can fall in the tile below
-     *
-     * @return True if all squares can go to the tile below, false if one of them can't
-     */
     public boolean allSquaresCanFall() {
         for (int i = Grid.LINES - 1; i >= 0; i--) {
             for (int j = 0; j < Grid.LINES_SIZE; j++) {
