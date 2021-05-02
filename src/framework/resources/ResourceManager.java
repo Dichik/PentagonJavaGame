@@ -68,4 +68,8 @@ public class ResourceManager {
         }
         writer.close();
     }
+
+    public static String[] readHistory(){
+        return null;
+    }
 }

@@ -16,7 +16,7 @@ public class MainMenu extends GameState {
     @Override
     protected void init() {
         options = new String[]{
-                "Start Game",
+                "Start Game", //<- we should choose a level after clicking here.
                 "Highlights",
                 "Info",
                 "Exit"
@@ -95,6 +95,6 @@ public class MainMenu extends GameState {
     }
 
     private void drawButtons(Graphics graphics) {
-
+        // add buttons.
     }
 }
