@@ -10,7 +10,7 @@ public class Pentamimo {
     public static final Pentamimo J;
 
     static {
-        I = new Pentamimo("light_blue", 4);
+        I = new Pentamimo("orange", 4);
         I.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 2, 1, 3, 1);
         I.setBlocks(Rotation.ROT90, 1, 0, 1, 1, 1, 2, 1, 3);
         I.setBlocks(Rotation.ROT180, 0, 2, 1, 2, 2, 2, 3, 2);
@@ -29,17 +29,18 @@ public class Pentamimo {
     private int size;
 
     public Pentamimo(String color, int size) {
-        blocksPositions = new int[4][size * 2];
+        this.blocksPositions = new int[4][size * 2];
         this.color = color;
         this.size = size;
         LIST.add(this);
     }
 
     public Square getSquareAt(Rotation currentRotation, int x, int y) {
-        if ((blocksPositions[currentRotation.posInArray][0] == x && blocksPositions[currentRotation.posInArray][1] == y) ||
-                (blocksPositions[currentRotation.posInArray][2] == x && blocksPositions[currentRotation.posInArray][3] == y) ||
-                (blocksPositions[currentRotation.posInArray][4] == x && blocksPositions[currentRotation.posInArray][5] == y) ||
-                (blocksPositions[currentRotation.posInArray][6] == x && blocksPositions[currentRotation.posInArray][7] == y)) {
+        if ((this.blocksPositions[currentRotation.posInArray][0] == x && this.blocksPositions[currentRotation.posInArray][1] == y) ||
+                (this.blocksPositions[currentRotation.posInArray][2] == x && this.blocksPositions[currentRotation.posInArray][3] == y) ||
+                (this.blocksPositions[currentRotation.posInArray][4] == x && this.blocksPositions[currentRotation.posInArray][5] == y) ||
+                (this.blocksPositions[currentRotation.posInArray][6] == x && this.blocksPositions[currentRotation.posInArray][7] == y)) {
+
             return new Square(color);
         } else {
             return null;
@@ -47,7 +48,7 @@ public class Pentamimo {
     }
 
     private void setBlocks(Rotation rot, int... coords) {
-        blocksPositions[rot.posInArray] = coords;
+        this.blocksPositions[rot.posInArray] = coords;
     }
 
     public int getSize() {

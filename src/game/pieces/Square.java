@@ -1,16 +1,18 @@
 package game.pieces;
 
-public class Square {
+import java.util.Stack;
 
-    private String color;
+public class Square {
     private boolean fixed;
+    private Stack<String> st;
 
     private boolean stopping;
 
     public Square(String color) {
-        this.color = color;
-        fixed = false;
-        stopping = false;
+        st = new Stack<>();
+        st.add(color);
+        this.fixed = false;
+        this.stopping = false;
     }
 
     public boolean isFixed() {
@@ -18,26 +20,39 @@ public class Square {
     }
 
     public void setFixed() {
-        fixed = true;
+        this.fixed = true;
     }
 
     public void setStopping() {
-        stopping = true;
-    }
-
-    public void resetStopTime() {
-        stopping = false;
+        this.stopping = true;
     }
 
     public boolean isStopping() {
         return stopping;
     }
 
-    public void setNotFixed() {
-        fixed = false;
+    public String getColor() {
+        return st.peek() ;
     }
 
-    public String getColor() {
-        return color;
+    /**
+     * 02.05.2021 added
+     */
+    public void add(String color) {
+        st.add(color) ;
+    }
+
+    public void removeColor() {
+        st.pop() ;
+    }
+
+    public boolean isEmpty(){
+        return st.empty() ;
+    }
+    public boolean hasAnotherColor() {
+        if(st.size() > 1){
+            return true ;
+        }
+        return false;
     }
 }
