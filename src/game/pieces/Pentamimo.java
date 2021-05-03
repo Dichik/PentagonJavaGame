@@ -19,9 +19,11 @@ public class Pentamimo {
     public static final Pentamimo S;
     public static final Pentamimo U;
 
+    public static int USED = 0;
+
     static {
         I = new Pentamimo("orange", 5);
-        I.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1);
+        I.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1); // 10
         //I.setBlocks(Rotation.ROT90, 1, 0, 1, 1, 1, 2, 1, 3);
         //I.setBlocks(Rotation.ROT180, 0, 2, 1, 2, 2, 2, 3, 2);
         //I.setBlocks(Rotation.ROT270, 2, 0, 2, 1, 2, 2, 2, 3);
@@ -56,7 +58,7 @@ public class Pentamimo {
         //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
         //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
         W = new Pentamimo("orange", 5);
-        W.setBlocks(Rotation.ROT0, 0, 0, 1, 0, 0, 1, 2, 0, 1, 2);
+        W.setBlocks(Rotation.ROT0, 0, 0, 1, 0, 0, 1, 0, 2, 1, 2);
         //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
         //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
         //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
