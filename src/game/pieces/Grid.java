@@ -20,7 +20,7 @@ public class Grid {
             for (int j = 0; j < pentamimo.getSize(); j++) {
                 if (pentamimo.getSquareAt(rotation, i, j) != null) {
                     if (singlePieces[i][j] == null)
-                        this.singlePieces[locationY + i][locationX + j] = pentamimo.getSquareAt(rotation, i, j);
+                        this.singlePieces[locationY + i][locationX + j] = pentamimo.getSquareAt(rotation, i, j );
                     else singlePieces[i][j].add("orange");
                 }
             }

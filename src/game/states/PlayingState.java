@@ -183,14 +183,14 @@ public class PlayingState extends GameState {
         graphics.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 
         graphics.setColor(Color.BLACK);
-        graphics.drawRect(760, 15, 200, 460);
+        graphics.drawRect(760, 15, 200, 537);
         graphics.setColor(new Color(175, 175, 175));
-        graphics.fillRect(761, 16, 199, 459);
+        graphics.fillRect(761, 16, 199, 536);
 
         graphics.setColor(Color.BLACK);
         graphics.drawLine(760, 32, 960, 32);
-        graphics.drawLine(760, 180, 960, 180);
-        graphics.drawLine(760, 330, 960, 330);
+        graphics.drawLine(760, 190, 960, 190);
+        graphics.drawLine(760, 375, 960, 375);
 
         graphics.setFont(new Font("Roboto", Font.ITALIC + Font.BOLD, 16));
         graphics.drawString("Next:", 820, 30);
@@ -279,7 +279,7 @@ public class PlayingState extends GameState {
                     Square square = p.getSquareAt(Pentamimo.Rotation.ROT0, i, j);
                     if (square != null)
                         graphics.drawImage(ResourceManager.texture("block_" + square.getColor() + ".png"),
-                                820 + j * 30, 40 + count * 150 + i * 30, 30, 30, null);
+                                820 + j * 30, 40 + count * 180 + i * 30, 30, 30, null);
                 }
             }
             count++;

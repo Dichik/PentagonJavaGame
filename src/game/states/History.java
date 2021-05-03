@@ -3,8 +3,10 @@ package game.states;
 import framework.display.Window;
 import framework.gamestates.GameState;
 import framework.resources.ResourceManager;
+import game.Game;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class History extends GameState {
 
@@ -38,7 +40,9 @@ public class History extends GameState {
 
     @Override
     public void keyPressed(int key) {
-
+        if(key == KeyEvent.VK_ESCAPE){
+            Game.STATE_MANAGER.backToPrevious();
+        }
     }
 
     @Override

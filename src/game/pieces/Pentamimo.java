@@ -8,19 +8,78 @@ public class Pentamimo {
 
     public static final Pentamimo I;
     public static final Pentamimo J;
+    public static final Pentamimo G;
+    public static final Pentamimo F;
+    public static final Pentamimo K;
+    public static final Pentamimo P;
+    public static final Pentamimo R;
+    public static final Pentamimo W;
+    public static final Pentamimo L;
+    public static final Pentamimo Q;
+    public static final Pentamimo S;
+    public static final Pentamimo U;
 
     static {
-        I = new Pentamimo("orange", 4);
-        I.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 2, 1, 3, 1);
-        I.setBlocks(Rotation.ROT90, 1, 0, 1, 1, 1, 2, 1, 3);
-        I.setBlocks(Rotation.ROT180, 0, 2, 1, 2, 2, 2, 3, 2);
-        I.setBlocks(Rotation.ROT270, 2, 0, 2, 1, 2, 2, 2, 3);
-        J = new Pentamimo("orange", 3);
-        J.setBlocks(Rotation.ROT0, 0, 0, 0, 1, 1, 1, 2, 1);
-        J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
-        J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
-        J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
-
+        I = new Pentamimo("orange", 5);
+        I.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1);
+        //I.setBlocks(Rotation.ROT90, 1, 0, 1, 1, 1, 2, 1, 3);
+        //I.setBlocks(Rotation.ROT180, 0, 2, 1, 2, 2, 2, 3, 2);
+        //I.setBlocks(Rotation.ROT270, 2, 0, 2, 1, 2, 2, 2, 3);
+        J = new Pentamimo("orange", 5);
+        J.setBlocks(Rotation.ROT0, 0, 0, 0, 1, 1, 1, 2, 1, 0, 2);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        G = new Pentamimo("orange", 5);
+        G.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 2, 1, 3, 1, 3, 2);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        F = new Pentamimo("orange", 5);
+        F.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 2, 1, 3, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        K = new Pentamimo("orange", 5);
+        K.setBlocks(Rotation.ROT0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        P = new Pentamimo("orange", 5);
+        P.setBlocks(Rotation.ROT0, 0, 0, 0, 1, 0, 2, 1, 0, 2, 0);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        R = new Pentamimo("orange", 5);
+        R.setBlocks(Rotation.ROT0, 0, 0, 1, 0, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        W = new Pentamimo("orange", 5);
+        W.setBlocks(Rotation.ROT0, 0, 0, 1, 0, 0, 1, 2, 0, 1, 2);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        L = new Pentamimo("orange", 5);
+        L.setBlocks(Rotation.ROT0, 0, 1, 0, 2, 1, 1, 1, 2, 1, 0);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        Q = new Pentamimo("orange", 5);
+        Q.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 1, 0, 2, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        S = new Pentamimo("orange", 5);
+        S.setBlocks(Rotation.ROT0, 0, 2, 1, 2, 1, 1, 2, 1, 2, 0);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
+        U = new Pentamimo("orange", 5);
+        U.setBlocks(Rotation.ROT0, 0, 1, 0, 2, 1, 1, 2, 1, 2, 0);
+        //J.setBlocks(Rotation.ROT90, 1, 0, 2, 0, 1, 1, 1, 2);
+        //J.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 2, 2);
+        //J.setBlocks(Rotation.ROT270, 1, 0, 1, 1, 1, 2, 0, 2);
     }
 
     private int[][] blocksPositions;
@@ -39,7 +98,8 @@ public class Pentamimo {
         if ((this.blocksPositions[currentRotation.posInArray][0] == x && this.blocksPositions[currentRotation.posInArray][1] == y) ||
                 (this.blocksPositions[currentRotation.posInArray][2] == x && this.blocksPositions[currentRotation.posInArray][3] == y) ||
                 (this.blocksPositions[currentRotation.posInArray][4] == x && this.blocksPositions[currentRotation.posInArray][5] == y) ||
-                (this.blocksPositions[currentRotation.posInArray][6] == x && this.blocksPositions[currentRotation.posInArray][7] == y)) {
+                (this.blocksPositions[currentRotation.posInArray][6] == x && this.blocksPositions[currentRotation.posInArray][7] == y) ||
+                (this.blocksPositions[currentRotation.posInArray][8] == x && this.blocksPositions[currentRotation.posInArray][9] == y)) {
 
             return new Square(color);
         } else {
