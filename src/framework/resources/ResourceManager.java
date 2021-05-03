@@ -53,4 +53,23 @@ public class ResourceManager {
             return null;
         }
     }
+
+    public static void writeScores(Object[] scores) {
+        PrintWriter writer = null;
+
+        try {
+            writer = new PrintWriter(new File("res/scores.txt"));
+        } catch (FileNotFoundException e) {
+            System.out.println("[ResourceManager]: File scores.txt not found");
+        }
+
+        for (int i = 0; i < scores.length; i++) {
+            writer.println(i + "-" + scores[i]);
+        }
+        writer.close();
+    }
+
+    public static String[] readHistory(){
+        return null;
+    }
 }
