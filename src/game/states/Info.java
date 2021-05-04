@@ -15,8 +15,7 @@ public class Info extends GameState {
 
     public Info() {
         options = new String[]{
-                "Rules",
-                "History"
+                "Rules"
         };
         selected = 0;
         System.out.println("[Game][States]: Created info");
@@ -42,9 +41,9 @@ public class Info extends GameState {
         graphics.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
         graphics.setColor(new Color(255, 255, 255, 255));
-        graphics.drawRect(350,50,300,450);
+        graphics.drawRect(350, 50, 300, 450);
         graphics.setColor(new Color(50, 47, 47, 255));
-        graphics.fillRect(351,51,299,449);
+        graphics.fillRect(351, 51, 299, 449);
     }
 
     private void drawOptions(Graphics graphics) {
@@ -52,7 +51,7 @@ public class Info extends GameState {
         graphics.setFont(new Font("Roboto", Font.PLAIN + Font.ITALIC, 25));
 
         for (int i = 0; i < options.length; i++) {
-            if(selected == i){
+            if (selected == i) {
                 graphics.setColor(Color.GREEN);
             } else {
                 graphics.setColor(Color.WHITE);
@@ -60,6 +59,7 @@ public class Info extends GameState {
             drawCenteredString(options[i], Window.WIDTH, Window.HEIGHT, graphics, i);
         }
     }
+
     private void drawCenteredString(String option, int width, int height,
                                     Graphics graphics, int diffBetweenLines) {
         FontMetrics fm = graphics.getFontMetrics();
@@ -73,17 +73,8 @@ public class Info extends GameState {
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_ESCAPE) {
             Game.STATE_MANAGER.backToPrevious();
-        } else if (key == KeyEvent.VK_UP) {
-            selected = Math.abs(selected - 1);
-        } else if (key == KeyEvent.VK_DOWN) {
-            selected = (selected + 1) % 2;
         } else if (key == KeyEvent.VK_ENTER) {
-            if(selected == 0){
-                //url to the github
-            } else {
-                Game.STATE_MANAGER.changeState(new History());
-            }
-            //some actions
+            //url to the github
         }
     }
 

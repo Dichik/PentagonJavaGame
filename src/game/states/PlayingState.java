@@ -10,12 +10,13 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import framework.display.Window;
 import game.pieces.Pentamimo;
 import game.pieces.Square;
+
+import javax.swing.*;
 
 public class PlayingState extends GameState {
     /**
@@ -70,6 +71,8 @@ public class PlayingState extends GameState {
             this.drawGameOverMessage(graphics);
     }
 
+    private int countSpaces ;
+
     /**
      * 2 options to move the figure:
      * 1 -> make a matrix with filled pieces and make a NULL only when there n = 1.
@@ -112,9 +115,12 @@ public class PlayingState extends GameState {
                 Game.STATE_MANAGER.backToPrevious(); //Reset
             }
         } else if (key == KeyEvent.VK_ENTER) {
+            countSpaces = 0;
             if (thereNoGreenPieces()) {
                 if (grid.canSet()) grid.setAllSquaresToBeStopped();
             }
+        } else if(key == KeyEvent.VK_SPACE && !lost){
+            this.rotateClockwise() ;
         }
     }
 
@@ -161,6 +167,7 @@ public class PlayingState extends GameState {
     }
 
     private void drawBackground(Graphics graphics) {
+
         graphics.setColor(new Color(212, 206, 206));
         graphics.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 
@@ -176,6 +183,7 @@ public class PlayingState extends GameState {
 
         graphics.setFont(new Font("Roboto", Font.ITALIC + Font.BOLD, 16));
         graphics.drawString("Next:", 820, 30);
+
     }
 
     private String countSquares(int x, boolean line) {
@@ -272,9 +280,6 @@ public class PlayingState extends GameState {
                 //write massage about win
                 this.currentPentamimo = null;
             }
-            System.out.println(queue.size());
-            //else lost = true;
-            //System.out.println(Pentamimo.USED);
             this.currentRotation = Pentamimo.Rotation.ROT0;
             if(Pentamimo.USED <= Pentamimo.LIST.size() || !queue.isEmpty())
                 if(currentPentamimo != null)
@@ -285,22 +290,30 @@ public class PlayingState extends GameState {
             this.lost = true;
         }
     }
-    /*
+    /**
+     * as for rotation, write a massage that you can rotate
+     * a figure by clicking SPACE(Clockwise).
+     * 1. delete Pentamimo.
+     * 2. add with needed Pentamimo (ROT + 1).
+     */
+
     private void rotateClockwise() {
-        this.fixRotationOrigin();
-
-        if (this.grid.canPlaceHere(currentPentamimo, currentRotationOriginX, currentRotationOriginY, currentRotation.rotateClockwise())) {
-            //this.grid.removeTetromino();
-            this.currentRotation = this.currentRotation.rotateClockwise();
-            this.grid.placePentamimo(currentPentamimo, currentRotationOriginX, currentRotationOriginY, currentRotation);
-        }
+        //this.fixRotationOrigin();
+        /**
+         * currentLocationX
+         * currentLocationY
+         * check if we can rotate
+         */
+        this.grid.removePentamimo();
+        this.currentRotation = this.currentRotation.rotateClockwise();
+        this.grid.placePentamimo(currentPentamimo, 0, 0, currentRotation);
     }
-
+    /*
     private void rotateCounterclockwise() {
         this.fixRotationOrigin();
 
         if (this.grid.canPlaceHere(currentPentamimo, currentRotationOriginX, currentRotationOriginY, currentRotation.rotateCounterclockwise())) {
-            //this.grid.removeTetromino();
+            this.grid.removeTetromino();
             this.currentRotation = this.currentRotation.rotateCounterclockwise();
             this.grid.placePentamimo(currentPentamimo, currentRotationOriginX, currentRotationOriginY, currentRotation);
         }
@@ -314,5 +327,5 @@ public class PlayingState extends GameState {
         if (this.currentRotationOriginY + this.currentPentamimo.getSize() > Grid.LINES)
             this.currentRotationOriginY = (Grid.LINES - 1) - this.currentPentamimo.getSize();
     }
-     */
+    */
 }

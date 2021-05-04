@@ -45,6 +45,11 @@ public class PauseMenu extends MainMenu {
             } else {
                 Game.STATE_MANAGER.clearStack();
                 Game.STATE_MANAGER.changeState(new MainMenu());
+                /**
+                 * Bug #1
+                 * when we go the menu from pause menu,
+                 * we should clear everything that was from the last game.
+                 */
             }
         } else if (key == KeyEvent.VK_ESCAPE) {
             Game.STATE_MANAGER.backToPrevious();

@@ -54,7 +54,9 @@ public class MainMenu extends GameState {
                 Game.STATE_MANAGER.changeState(new HighestScoreMenu());
             else if (selected == 2)
                 Game.STATE_MANAGER.changeState(new Info());
-            else System.exit(0);
+            else {
+                System.exit(0);
+            }
         }
     }
 
@@ -67,9 +69,9 @@ public class MainMenu extends GameState {
         graphics.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
         graphics.setColor(new Color(255, 255, 255, 255));
-        graphics.drawRect(350,50,300,450);
+        graphics.drawRect(350, 50, 300, 450);
         graphics.setColor(new Color(50, 47, 47, 255));
-        graphics.fillRect(351,51,299,449);
+        graphics.fillRect(351, 51, 299, 449);
     }
 
     private void drawOptions(Graphics graphics) {

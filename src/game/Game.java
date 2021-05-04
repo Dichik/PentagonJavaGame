@@ -14,13 +14,15 @@ public class Game {
     public static final GameStateManager STATE_MANAGER = new GameStateManager();
     private static boolean running = false;
     private static Timer timer;
+    public static long startTime;
+    public static long endTime;
 
     public static void main(String[] args) {
         System.out.println("[Game][Main]: Starting...");
 
         ResourceManager.readImageFiles();
         Window.create();
-
+        startTime = System.nanoTime();
         startGame();
         System.out.println("[Game][Main]: Started!");
     }

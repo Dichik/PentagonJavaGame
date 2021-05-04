@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -69,7 +70,20 @@ public class ResourceManager {
         writer.close();
     }
 
-    public static String[] readHistory(){
-        return null;
+    public static ArrayList<String> readHistory() {
+        Scanner in;
+        int countLines = 0 ;
+        ArrayList<String> history = new ArrayList<>() ;
+        try {
+            in = new Scanner(Path.of("res/history.txt"), "UTF-8");
+            while(in.hasNextLine() && countLines < 5){
+                history.add(in.nextLine()) ;
+                System.out.println(history.get(countLines));
+                countLines ++ ;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return history;
     }
 }

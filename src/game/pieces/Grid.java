@@ -20,7 +20,7 @@ public class Grid {
             for (int j = 0; j < pentamimo.getSize(); j++) {
                 if (pentamimo.getSquareAt(rotation, i, j) != null) {
                     if (singlePieces[i][j] == null)
-                        this.singlePieces[locationY + i][locationX + j] = pentamimo.getSquareAt(rotation, i, j );
+                        this.singlePieces[locationY + i][locationX + j] = pentamimo.getSquareAt(rotation, i, j);
                     else singlePieces[i][j].add("orange");
                 }
             }
@@ -299,6 +299,21 @@ public class Grid {
         }
         System.out.println("Here");
         return true;
+    }
+
+    public void removePentamimo() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (this.singlePieces[i][j] != null) {
+                    if (!this.singlePieces[i][j].isFixed()
+                            || this.singlePieces[i][j].hasAnotherColor()) {
+                        if(!this.singlePieces[i][j].isFixed())
+                            this.singlePieces[i][j] = null;
+                        else this.singlePieces[i][j].removeColor();
+                    }
+                }
+            }
+        }
     }
 
 /**
