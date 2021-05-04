@@ -16,8 +16,6 @@ import framework.display.Window;
 import game.pieces.Pentamimo;
 import game.pieces.Square;
 
-import javax.swing.*;
-
 public class PlayingState extends GameState {
     /**
      * when we choose level we also set the timer for solving this game
@@ -33,6 +31,14 @@ public class PlayingState extends GameState {
     private Pentamimo hold;
 
     private int points;
+    /**
+     * points should be calculated by special formula
+     * (max_minutes - level_minutes) / 2 + level_minutes - finish_time
+     * Problems:
+     * 1.should calculate time
+     * 2.should create a timer
+     * ...
+     */
     private boolean lost;
 
     @Override

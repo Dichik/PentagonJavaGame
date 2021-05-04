@@ -10,8 +10,14 @@ public class PauseMenu extends MainMenu {
     @Override
     protected void init() {
         /**
+         * Bug #6
          * maybe add option to save the game stage
          * it means we can start the game from the saved stage -> a bit difficult
+         */
+        /**
+         * Bug #4
+         * Add option to restart the level.
+         * It means you can try to find the solution again for the same problem.
          */
         this.options = new String[]{
                 "Continue",
@@ -28,6 +34,7 @@ public class PauseMenu extends MainMenu {
     public void keyPressed(int key) {
 
         /**
+         * Bug #5
          * when we go to menu, there should be a message
          * about unsaved results of the current game
          */
