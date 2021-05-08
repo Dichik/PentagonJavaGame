@@ -7,8 +7,7 @@ import game.pieces.Grid;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -19,6 +18,41 @@ import game.pieces.Square;
 import javax.swing.*;
 
 public class PlayingState extends GameState {
+    class Pair {
+        private int x;
+        private int y;
+
+        public Pair(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Pair pair = (Pair) o;
+            return x == pair.x &&
+                    y == pair.y;
+        }
+    }
+
     /**
      * when we choose level we also set the timer for solving this game
      * and when the time is over we will get the massage about losing the game.
@@ -26,6 +60,7 @@ public class PlayingState extends GameState {
     private Grid grid;
 
     private Pentamimo.Rotation currentRotation;
+    private ArrayList<Pair> blockedSquares;
 
     private ArrayBlockingQueue<Pentamimo> queue;
     private Pentamimo currentPentamimo;
@@ -57,6 +92,9 @@ public class PlayingState extends GameState {
         this.hold = null;
 
         this.lost = false;
+        blockedSquares = new ArrayList<>();
+
+        createBlockedSquares();
 
         System.out.println("[Game][States]: Created playing state");
     }
@@ -77,6 +115,28 @@ public class PlayingState extends GameState {
 
         if (this.lost)
             this.drawGameOverMessage(graphics);
+    }
+
+    private void createBlockedSquares() {
+        int BLOCKED_PIECES = 10;
+        for (int i = 0; i < BLOCKED_PIECES; i++) {
+            Pair pair = new Pair(Math.abs(new Random().nextInt() % Grid.SIZE),
+                    Math.abs(new Random().nextInt() % Grid.SIZE));
+            if (!find(blockedSquares, pair)) {
+                blockedSquares.add(pair);
+                this.grid.getLine(pair.getY())[pair.getX()] = new Square("blue") ;
+                this.grid.getLine(pair.getY())[pair.getX()].setFixed();
+            } else i--;
+        }
+    }
+
+    private boolean find(ArrayList<Pair> blockedSquares, Pair pair) {
+        for (int i = 0; i < blockedSquares.size(); i++) {
+            if (pair.equals(blockedSquares.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -115,7 +175,25 @@ public class PlayingState extends GameState {
             }
         } else if (key == KeyEvent.VK_SPACE && !lost) {
             this.rotateClockwise();
+        } else if(key == KeyEvent.VK_S){
+            drawMatrix();
         }
+    }
+
+    private void drawMatrix() {
+        for(int i = 0; i < Grid.SIZE ; i ++){
+            for(int j = 0; j < Grid.SIZE; j ++){
+                if(this.grid.getLine(i)[j] != null){
+                    if(this.grid.getLine(i)[j].isFixed())
+                        System.out.print(1 + " ");
+                    else System.out.print(0 + " ");
+                } else {
+                    System.out.print(0 + " ");
+                }
+            }
+            System.out.print("\n");
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
     public static Object[] getReversed(int[] arr) {
@@ -224,8 +302,14 @@ public class PlayingState extends GameState {
                                 + "_dark.png"), j * 30, i * 30, 30, 30, null);
                     }
                 } else {
-                    graphics.drawImage(ResourceManager.texture("block_void.png"),
-                            j * 30, i * 30, 30, 30, null);
+                    Pair pair = new Pair(j, i);
+                    if (find(blockedSquares, pair)) {
+                        graphics.drawImage(ResourceManager.texture("block_blue_dark.png"),
+                                j * 30, i * 30, 30, 30, null);
+                    } else {
+                        graphics.drawImage(ResourceManager.texture("block_void.png"),
+                                j * 30, i * 30, 30, 30, null);
+                    }
                 }
             }
         }
@@ -277,7 +361,7 @@ public class PlayingState extends GameState {
                 Game.STATE_MANAGER.changeState(new MainMenu());
                 Pentamimo.USED = 0;
                 this.currentPentamimo = null;
-                return ;
+                return;
             }
             this.currentRotation = Pentamimo.Rotation.ROT0;
             if (Pentamimo.USED <= Pentamimo.LIST.size() || !queue.isEmpty())

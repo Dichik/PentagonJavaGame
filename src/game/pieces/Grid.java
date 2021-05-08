@@ -129,7 +129,7 @@ public class Grid {
                             if (this.singlePieces[i + 1][j] == null) {
                                 this.singlePieces[i + 1][j] = this.singlePieces[i][j];
                             } else {
-                                this.singlePieces[i + 1][j].add(this.singlePieces[i + 1][j].getColor());
+                                this.singlePieces[i + 1][j].add("orange");
                             }
                             if (!this.singlePieces[i][j].hasAnotherColor())
                                 this.singlePieces[i][j] = null;
@@ -157,7 +157,7 @@ public class Grid {
                             if (this.singlePieces[i - 1][j] == null) {
                                 this.singlePieces[i - 1][j] = this.singlePieces[i][j];
                             } else {
-                                this.singlePieces[i - 1][j].add(this.singlePieces[i - 1][j].getColor());
+                                this.singlePieces[i - 1][j].add("orange");
                             }
                             if (!this.singlePieces[i][j].hasAnotherColor())
                                 this.singlePieces[i][j] = null;
@@ -185,7 +185,7 @@ public class Grid {
                             if (this.singlePieces[i][j - 1] == null) {
                                 this.singlePieces[i][j - 1] = this.singlePieces[i][j];
                             } else {
-                                this.singlePieces[i][j - 1].add(this.singlePieces[i][j - 1].getColor());
+                                this.singlePieces[i][j - 1].add("orange");
                             }
                             if (!this.singlePieces[i][j].hasAnotherColor())
                                 this.singlePieces[i][j] = null;
@@ -213,7 +213,7 @@ public class Grid {
                             if (this.singlePieces[i][j + 1] == null) {
                                 this.singlePieces[i][j + 1] = this.singlePieces[i][j];
                             } else {
-                                this.singlePieces[i][j + 1].add(this.singlePieces[i][j + 1].getColor());
+                                this.singlePieces[i][j + 1].add("orange");
                             }
                             if (!this.singlePieces[i][j].hasAnotherColor())
                                 this.singlePieces[i][j] = null;
@@ -286,7 +286,7 @@ public class Grid {
                 if (this.singlePieces[i][j] != null) {
                     if (!this.singlePieces[i][j].isFixed()
                             || this.singlePieces[i][j].hasAnotherColor()) {
-                        if(!this.singlePieces[i][j].isFixed())
+                        if (!this.singlePieces[i][j].isFixed())
                             this.singlePieces[i][j] = null;
                         else this.singlePieces[i][j].removeColor();
                     }
