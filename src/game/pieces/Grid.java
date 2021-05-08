@@ -4,13 +4,6 @@ public class Grid {
     public static final int SIZE = 16;
     private Square[][] singlePieces;
 
-    private int[][] countPieces = new int[SIZE - 1][SIZE - 1];
-
-    /**
-     * countPieces should be an array 3-D where every i and j place have MAX two colors
-     * it's like stack -> last in and first out.
-     */
-
     public Grid() {
         this.singlePieces = new Square[SIZE][SIZE];
     }
@@ -245,7 +238,6 @@ public class Grid {
                 if (this.singlePieces[i][j] != null) {
                     if (!this.singlePieces[i][j].isFixed() && !this.singlePieces[i][j].isStopping()) {
                         this.singlePieces[i][j].setStopping();
-                        countPieces[i][j] = 1;
                     }
                 }
             }

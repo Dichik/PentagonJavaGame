@@ -77,7 +77,7 @@ public class PlayingState extends GameState {
             this.drawGameOverMessage(graphics);
     }
 
-    private int countSpaces ;
+    private int countSpaces;
 
     /**
      * 2 options to move the figure:
@@ -88,10 +88,6 @@ public class PlayingState extends GameState {
      */
     @Override
     public void keyPressed(int key) {
-        /**
-         * should make ability to drag a piece
-         * because when we use keys it makes lots of collapse and troubles.
-         */
         if (key == KeyEvent.VK_RIGHT) {
             if (this.grid.allSquaresCanGoRight() && !lost) {
                 this.grid.movePiecesRight();
@@ -118,15 +114,15 @@ public class PlayingState extends GameState {
                     Arrays.sort(scores);
                     ResourceManager.writeScores(getReversed(scores));
                 }
-                Game.STATE_MANAGER.backToPrevious(); //Reset
+                Game.STATE_MANAGER.backToPrevious();
             }
         } else if (key == KeyEvent.VK_ENTER) {
             countSpaces = 0;
             if (thereNoGreenPieces()) {
                 if (grid.canSet()) grid.setAllSquaresToBeStopped();
             }
-        } else if(key == KeyEvent.VK_SPACE && !lost){
-            this.rotateClockwise() ;
+        } else if (key == KeyEvent.VK_SPACE && !lost) {
+            this.rotateClockwise();
         }
     }
 
@@ -280,22 +276,23 @@ public class PlayingState extends GameState {
 
     private void placePentamimo() {
         try {
-            if(!queue.isEmpty())
+            if (!queue.isEmpty())
                 this.currentPentamimo = this.queue.poll();
             else {
                 //write massage about win
                 this.currentPentamimo = null;
             }
             this.currentRotation = Pentamimo.Rotation.ROT0;
-            if(Pentamimo.USED <= Pentamimo.LIST.size() || !queue.isEmpty())
-                if(currentPentamimo != null)
+            if (Pentamimo.USED <= Pentamimo.LIST.size() || !queue.isEmpty())
+                if (currentPentamimo != null)
                     this.grid.placePentamimo(currentPentamimo, 0, 0, currentRotation);
-            if(Pentamimo.USED < Pentamimo.LIST.size())
+            if (Pentamimo.USED < Pentamimo.LIST.size())
                 this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
         } catch (ArrayIndexOutOfBoundsException e) {
             this.lost = true;
         }
     }
+
     /**
      * as for rotation, write a massage that you can rotate
      * a figure by clicking SPACE(Clockwise).

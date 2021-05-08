@@ -26,13 +26,9 @@ public class Pentamimo {
         {
             I = new Pentamimo("orange", 5); // 10
             I.setBlocks(Rotation.ROT0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1);
-            I.setBlocks(Rotation.ROT90, 1, 1, 1, 2, 1, 3, 1, 4, 1, 5);
-            /**
-             * Bug #2
-             * Wrong rotation.
-             */
+            I.setBlocks(Rotation.ROT90, 0, 1, 0, 2, 0, 3, 0, 4, 0, 0);
             I.setBlocks(Rotation.ROT180, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1);
-            I.setBlocks(Rotation.ROT270, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5);
+            I.setBlocks(Rotation.ROT270, 0, 1, 0, 2, 0, 3, 0, 4, 0, 0);
         }
         {
             J = new Pentamimo("orange", 5); // 1
