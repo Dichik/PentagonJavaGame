@@ -1,6 +1,8 @@
 package game.states;
 
 import game.Game;
+import game.pieces.Grid;
+import game.pieces.Pentamimo;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -39,9 +41,7 @@ public class PauseMenu extends MainMenu {
          * about unsaved results of the current game
          */
         if (key == KeyEvent.VK_DOWN) {
-            if (selected < options.length - 1)
-                selected++;
-            else selected = 0;
+            selected = (selected + 1) % options.length;
         } else if (key == KeyEvent.VK_UP) {
             if (selected > 0)
                 selected--;
@@ -52,11 +52,7 @@ public class PauseMenu extends MainMenu {
             } else {
                 Game.STATE_MANAGER.clearStack();
                 Game.STATE_MANAGER.changeState(new MainMenu());
-                /**
-                 * Bug #1
-                 * when we go the menu from pause menu,
-                 * we should clear everything that was from the last game.
-                 */
+                Pentamimo.USED = 0;
             }
         } else if (key == KeyEvent.VK_ESCAPE) {
             Game.STATE_MANAGER.backToPrevious();

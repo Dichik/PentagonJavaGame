@@ -79,13 +79,6 @@ public class PlayingState extends GameState {
 
     private int countSpaces;
 
-    /**
-     * 2 options to move the figure:
-     * 1 -> make a matrix with filled pieces and make a NULL only when there n = 1.
-     * 2 -> jump over the figure, just find a first place where we can place our figure.
-     *
-     * @param key
-     */
     @Override
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_RIGHT) {
@@ -293,42 +286,9 @@ public class PlayingState extends GameState {
         }
     }
 
-    /**
-     * as for rotation, write a massage that you can rotate
-     * a figure by clicking SPACE(Clockwise).
-     * 1. delete Pentamimo.
-     * 2. add with needed Pentamimo (ROT + 1).
-     */
-
     private void rotateClockwise() {
-        //this.fixRotationOrigin();
-        /**
-         * currentLocationX
-         * currentLocationY
-         * check if we can rotate
-         */
         this.grid.removePentamimo();
         this.currentRotation = this.currentRotation.rotateClockwise();
         this.grid.placePentamimo(currentPentamimo, 0, 0, currentRotation);
     }
-    /*
-    private void rotateCounterclockwise() {
-        this.fixRotationOrigin();
-
-        if (this.grid.canPlaceHere(currentPentamimo, currentRotationOriginX, currentRotationOriginY, currentRotation.rotateCounterclockwise())) {
-            this.grid.removeTetromino();
-            this.currentRotation = this.currentRotation.rotateCounterclockwise();
-            this.grid.placePentamimo(currentPentamimo, currentRotationOriginX, currentRotationOriginY, currentRotation);
-        }
-    }
-
-    private void fixRotationOrigin() {
-        if (this.currentRotationOriginX < 0)
-            this.currentRotationOriginX = 0;
-        if (this.currentRotationOriginX + this.currentPentamimo.getSize() > Grid.LINES_SIZE)
-            this.currentRotationOriginX = (Grid.LINES_SIZE - 1) - this.currentPentamimo.getSize();
-        if (this.currentRotationOriginY + this.currentPentamimo.getSize() > Grid.LINES)
-            this.currentRotationOriginY = (Grid.LINES - 1) - this.currentPentamimo.getSize();
-    }
-    */
 }

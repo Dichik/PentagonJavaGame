@@ -244,18 +244,6 @@ public class Grid {
         }
     }
 
-    public boolean canPlaceHere(Pentamimo pentamimo, int locationX, int locationY, Pentamimo.Rotation rotation) {
-        for (int i = 0; i < pentamimo.getSize(); i++) {
-            for (int j = 0; j < pentamimo.getSize(); j++) {
-                if (pentamimo.getSquareAt(rotation, i, j) != null && this.singlePieces[locationY + i][locationX + j] != null && this.singlePieces[locationY + i][locationX + j].isFixed()) {
-
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public boolean canSet() {
         for (int i = Grid.SIZE - 1; i >= 0; i--) {
             for (int j = 0; j < Grid.SIZE - 1; j++) {
@@ -312,5 +300,4 @@ public class Grid {
  * when we touch the 16-th place we draw that line in light grey color
  * so that the user could see number of used squares in the line.
  */
-
 }

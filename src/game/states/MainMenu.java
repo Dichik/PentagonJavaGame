@@ -27,22 +27,18 @@ public class MainMenu extends GameState {
 
     @Override
     public void tick() {
-
     }
 
     @Override
     public void render(Graphics graphics) {
         drawBackground(graphics);
-        drawButtons(graphics);
         drawOptions(graphics);
     }
 
     @Override
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_DOWN) {
-            if (selected < 3)
-                selected++;
-            else selected = 0;
+            selected = (selected + 1) % options.length ;
         } else if (key == KeyEvent.VK_UP) {
             if (selected > 0)
                 selected--;
@@ -94,9 +90,5 @@ public class MainMenu extends GameState {
         int y = (fm.getAscent() + (200 + 200 * diffBetweenLines -
                 (fm.getAscent() + fm.getDescent())) / 2);
         graphics.drawString(option, x, y);
-    }
-
-    private void drawButtons(Graphics graphics) {
-        // add buttons.
     }
 }
