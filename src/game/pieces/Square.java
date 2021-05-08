@@ -32,26 +32,20 @@ public class Square {
     }
 
     public String getColor() {
-        return st.peek() ;
+        return st.peek();
     }
 
-    /**
-     * 02.05.2021 added
-     */
     public void add(String color) {
-        st.add(color) ;
+        st.add(color);
     }
 
     public void removeColor() {
-        st.pop() ;
+        st.pop();
     }
 
-    public boolean isEmpty(){
-        return st.empty() ;
-    }
     public boolean hasAnotherColor() {
-        if(st.size() > 1){
-            return true ;
+        if (st.size() > 1) {
+            return true;
         }
         return false;
     }

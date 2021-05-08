@@ -1,7 +1,6 @@
 package game.pieces;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Pentamimo {
 
@@ -160,22 +159,5 @@ public class Pentamimo {
             else
                 return Rotation.values()[3];
         }
-
-        public Rotation rotateCounterclockwise() {
-            if (posInArray < 3)
-                return Rotation.values()[posInArray + 1];
-            else
-                return Rotation.values()[0];
-        }
     }
-
-    @Override
-    public String toString() {
-        return "Pentamimo{" +
-                "blocksPositions=" + Arrays.toString(blocksPositions) +
-                ", color='" + color + '\'' +
-                ", size=" + size +
-                '}';
-    }
-
 }
