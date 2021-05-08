@@ -110,6 +110,10 @@ public class Pentamimo {
 
     private int[][] blocksPositions;
 
+    public int[][] getBlocksPositions() {
+        return blocksPositions;
+    }
+
     private String color;
     private int size;
 
@@ -148,6 +152,10 @@ public class Pentamimo {
         ROT270(3);
 
         private int posInArray;
+
+        public int getPosInArray() {
+            return posInArray;
+        }
 
         Rotation(int posInArray) {
             this.posInArray = posInArray;

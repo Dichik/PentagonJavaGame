@@ -45,8 +45,6 @@ public class PlayingState extends GameState {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
             Pair pair = (Pair) o;
             return x == pair.x &&
                     y == pair.y;
@@ -279,6 +277,11 @@ public class PlayingState extends GameState {
     }
 
     private void drawGrid(Graphics graphics) {
+        if(!grid.canPlacePentamimoAnywhere(currentPentamimo)){
+            drawGameOverMessage(graphics);
+            return ;
+        }
+
         for (int i = 0; i < Grid.SIZE; i++) {
             for (int j = 0; j < Grid.SIZE; j++) {
                 Square square = this.grid.getLine(i)[j];

@@ -1,5 +1,8 @@
 package game.pieces;
 
+import game.pieces.Pentamimo;
+import game.states.MainMenu;
+
 public class Grid {
     public static final int SIZE = 16;
     private Square[][] singlePieces;
@@ -295,6 +298,47 @@ public class Grid {
         }
     }
 
+    public boolean canPlacePentamimoAnywhere(Pentamimo pentamimo) {
+        if(checkForRotation(pentamimo, Pentamimo.Rotation.ROT0))
+            return true ;
+        if(checkForRotation(pentamimo, Pentamimo.Rotation.ROT90))
+            return true;
+        if(checkForRotation(pentamimo, Pentamimo.Rotation.ROT180))
+            return true;
+        if(checkForRotation(pentamimo, Pentamimo.Rotation.ROT270))
+            return true ;
+        return false;
+    }
+
+    private boolean checkForRotation(Pentamimo pentamimo, Pentamimo.Rotation rotation) {
+        int maxX = -1;
+        int minX = 20;
+        int maxY = -1;
+        int minY = 20;
+        int[][] blocks = pentamimo.getBlocksPositions();
+
+        for (int i = 0; i < 10; i++) {
+            int coordinate = blocks[rotation.getPosInArray()][i];
+            if (i % 2 == 0) {
+                maxX = Math.max(maxX, coordinate);
+                minX = Math.min(minX, coordinate);
+            } else {
+                maxY = Math.max(maxY, coordinate);
+                minY = Math.min(minY, coordinate);
+            }
+        }
+
+        int diffByY = maxY - minY + 1;
+        int diffByX = maxX - minX + 1;
+
+        //System.out.println("Difference: " + diffByX + " " + diffByY);
+        for (int i = 0; i < Grid.SIZE - 1 - diffByX; i++) {
+            for (int j = 0; j < Grid.SIZE - 2 - diffByY; j++) {
+                //check all sides
+            }
+        }
+        return true;
+    }
 /**
  * when we touch the 16-th place we draw that line in light grey color
  * so that the user could see number of used squares in the line.
