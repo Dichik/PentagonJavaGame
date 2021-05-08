@@ -87,14 +87,14 @@ public class PlayingState extends GameState {
         this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
         this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
 
+        blockedSquares = new ArrayList<>();
+        createBlockedSquares();
+
         this.placePentamimo();
 
         this.hold = null;
 
         this.lost = false;
-        blockedSquares = new ArrayList<>();
-
-        createBlockedSquares();
 
         System.out.println("[Game][States]: Created playing state");
     }
@@ -124,8 +124,9 @@ public class PlayingState extends GameState {
                     Math.abs(new Random().nextInt() % Grid.SIZE));
             if (!find(blockedSquares, pair)) {
                 blockedSquares.add(pair);
-                this.grid.getLine(pair.getY())[pair.getX()] = new Square("blue") ;
+                this.grid.getLine(pair.getY())[pair.getX()] = new Square("blue");
                 this.grid.getLine(pair.getY())[pair.getX()].setFixed();
+                this.grid.getLine(pair.getY())[pair.getX()].setStopping();
             } else i--;
         }
     }
@@ -175,16 +176,16 @@ public class PlayingState extends GameState {
             }
         } else if (key == KeyEvent.VK_SPACE && !lost) {
             this.rotateClockwise();
-        } else if(key == KeyEvent.VK_S){
+        } else if (key == KeyEvent.VK_S) {
             drawMatrix();
         }
     }
 
     private void drawMatrix() {
-        for(int i = 0; i < Grid.SIZE ; i ++){
-            for(int j = 0; j < Grid.SIZE; j ++){
-                if(this.grid.getLine(i)[j] != null){
-                    if(this.grid.getLine(i)[j].isFixed())
+        for (int i = 0; i < Grid.SIZE; i++) {
+            for (int j = 0; j < Grid.SIZE; j++) {
+                if (this.grid.getLine(i)[j] != null) {
+                    if (this.grid.getLine(i)[j].isFixed())
                         System.out.print(1 + " ");
                     else System.out.print(0 + " ");
                 } else {
@@ -265,9 +266,11 @@ public class PlayingState extends GameState {
                 Square square = this.grid.getLine(i)[j];
                 if (square != null) {
                     if (line) {
-                        if (i == x && square.isFixed()) cnt++;
+                        if (i == x && square.isFixed()
+                                && !square.getColor().equals("blue")) cnt++;
                     } else {
-                        if (j == x && square.isFixed()) cnt++;
+                        if (j == x && square.isFixed()
+                                && !square.getColor().equals("blue")) cnt++;
                     }
                 }
             }
@@ -288,8 +291,7 @@ public class PlayingState extends GameState {
                 if (square != null) {
                     if (square.hasAnotherColor()) {
                         graphics.drawImage(ResourceManager.texture("block_" +
-                                "green"
-                                + ".png"), j * 30, i * 30, 30, 30, null);
+                                "green" + ".png"), j * 30, i * 30, 30, 30, null);
                         continue;
                     }
                     if (!square.isFixed())
@@ -363,10 +365,12 @@ public class PlayingState extends GameState {
                 this.currentPentamimo = null;
                 return;
             }
+
             this.currentRotation = Pentamimo.Rotation.ROT0;
             if (Pentamimo.USED <= Pentamimo.LIST.size() || !queue.isEmpty())
                 if (currentPentamimo != null)
                     this.grid.placePentamimo(currentPentamimo, 0, 0, currentRotation);
+
             if (Pentamimo.USED < Pentamimo.LIST.size())
                 this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
         } catch (ArrayIndexOutOfBoundsException e) {
