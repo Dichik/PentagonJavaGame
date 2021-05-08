@@ -1,9 +1,10 @@
 package game.states;
 
+import framework.display.Window;
 import game.Game;
-import game.pieces.Grid;
 import game.pieces.Pentamimo;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -12,17 +13,13 @@ public class PauseMenu extends MainMenu {
     @Override
     protected void init() {
         /**
-         * Bug #6
-         * maybe add option to save the game stage
-         * it means we can start the game from the saved stage -> a bit difficult
-         */
-        /**
          * Bug #4
          * Add option to restart the level.
          * It means you can try to find the solution again for the same problem.
          */
         this.options = new String[]{
                 "Continue",
+                "Restart",
                 "To Menu"
         };
     }
@@ -34,7 +31,6 @@ public class PauseMenu extends MainMenu {
 
     @Override
     public void keyPressed(int key) {
-
         /**
          * Bug #5
          * when we go to menu, there should be a message
@@ -49,10 +45,16 @@ public class PauseMenu extends MainMenu {
         } else if (key == KeyEvent.VK_ENTER) {
             if (selected == 0) {
                 Game.STATE_MANAGER.backToPrevious();
+            } else if (selected == 2) {
+                int userOption = JOptionPane.showConfirmDialog(Window.window,
+                        "Attention!\n" + "Your results will be unsaved!");
+                if(userOption == 0) {
+                    Game.STATE_MANAGER.clearStack();
+                    Game.STATE_MANAGER.changeState(new MainMenu());
+                    Pentamimo.USED = 0;
+                }
             } else {
-                Game.STATE_MANAGER.clearStack();
-                Game.STATE_MANAGER.changeState(new MainMenu());
-                Pentamimo.USED = 0;
+                // add actions after algo things
             }
         } else if (key == KeyEvent.VK_ESCAPE) {
             Game.STATE_MANAGER.backToPrevious();
