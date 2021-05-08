@@ -277,7 +277,6 @@ public class Grid {
                 }
             }
         }
-        System.out.println("Here");
         return true;
     }
 

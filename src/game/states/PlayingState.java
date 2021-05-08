@@ -16,6 +16,8 @@ import framework.display.Window;
 import game.pieces.Pentamimo;
 import game.pieces.Square;
 
+import javax.swing.*;
+
 public class PlayingState extends GameState {
     /**
      * when we choose level we also set the timer for solving this game
@@ -77,8 +79,6 @@ public class PlayingState extends GameState {
             this.drawGameOverMessage(graphics);
     }
 
-    private int countSpaces;
-
     @Override
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_RIGHT) {
@@ -110,7 +110,6 @@ public class PlayingState extends GameState {
                 Game.STATE_MANAGER.backToPrevious();
             }
         } else if (key == KeyEvent.VK_ENTER) {
-            countSpaces = 0;
             if (thereNoGreenPieces()) {
                 if (grid.canSet()) grid.setAllSquaresToBeStopped();
             }
@@ -272,8 +271,13 @@ public class PlayingState extends GameState {
             if (!queue.isEmpty())
                 this.currentPentamimo = this.queue.poll();
             else {
-                //write massage about win
+                JOptionPane.showMessageDialog(Window.window,
+                        "Congratulations!\nYou've done that");
+                Game.STATE_MANAGER.clearStack();
+                Game.STATE_MANAGER.changeState(new MainMenu());
+                Pentamimo.USED = 0;
                 this.currentPentamimo = null;
+                return ;
             }
             this.currentRotation = Pentamimo.Rotation.ROT0;
             if (Pentamimo.USED <= Pentamimo.LIST.size() || !queue.isEmpty())
