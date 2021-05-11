@@ -1,10 +1,7 @@
 package game.pieces;
 
-import game.pieces.Pentamimo;
-import game.states.MainMenu;
-
 public class Grid {
-    public static final int SIZE = 16;
+    public static final int SIZE = 13;
     private Square[][] singlePieces;
 
     public Grid() {
@@ -253,28 +250,36 @@ public class Grid {
                 if (this.singlePieces[i][j] != null) {
                     if (!this.singlePieces[i][j].isFixed() && !this.singlePieces[i][j].isStopping()) {
                         if (i < Grid.SIZE - 2 && singlePieces[i + 1][j] != null)
-                            if (singlePieces[i + 1][j].isFixed())
+                            if (singlePieces[i + 1][j].isFixed()
+                                    && !singlePieces[i + 1][j].getColor().equals("blue"))
                                 return false;
                         if (i > 0 && singlePieces[i - 1][j] != null)
-                            if (singlePieces[i - 1][j].isFixed())
+                            if (singlePieces[i - 1][j].isFixed()
+                                    && !singlePieces[i - 1][j].getColor().equals("blue"))
                                 return false;
                         if (j < Grid.SIZE - 2 && singlePieces[i][j + 1] != null)
-                            if (singlePieces[i][j + 1].isFixed())
+                            if (singlePieces[i][j + 1].isFixed()
+                                    && !singlePieces[i][j + 1].getColor().equals("blue"))
                                 return false;
                         if (j > 0 && singlePieces[i][j - 1] != null)
-                            if (singlePieces[i][j - 1].isFixed())
+                            if (singlePieces[i][j - 1].isFixed()
+                                    && !singlePieces[i][j - 1].getColor().equals("blue"))
                                 return false;
                         if (i > 0 && j < Grid.SIZE - 2 && singlePieces[i - 1][j + 1] != null)
-                            if (singlePieces[i - 1][j + 1].isFixed())
+                            if (singlePieces[i - 1][j + 1].isFixed()
+                                    && !singlePieces[i - 1][j + 1].getColor().equals("blue"))
                                 return false;
                         if (i > 0 && j > 0 && singlePieces[i - 1][j - 1] != null)
-                            if (singlePieces[i - 1][j - 1].isFixed())
+                            if (singlePieces[i - 1][j - 1].isFixed()
+                                    && !singlePieces[i - 1][j - 1].getColor().equals("blue"))
                                 return false;
                         if (i < Grid.SIZE - 2 && j < Grid.SIZE - 2 && singlePieces[i + 1][j + 1] != null)
-                            if (singlePieces[i + 1][j + 1].isFixed())
+                            if (singlePieces[i + 1][j + 1].isFixed()
+                                    && !singlePieces[i + 1][j + 1].getColor().equals("blue"))
                                 return false;
                         if (j > 0 && i < Grid.SIZE - 2 && singlePieces[i + 1][j - 1] != null)
-                            if (singlePieces[i + 1][j - 1].isFixed())
+                            if (singlePieces[i + 1][j - 1].isFixed()
+                                    && !singlePieces[i + 1][j - 1].getColor().equals("blue"))
                                 return false;
                     }
                 }
@@ -299,14 +304,14 @@ public class Grid {
     }
 
     public boolean canPlacePentamimoAnywhere(Pentamimo pentamimo) {
-        if(checkForRotation(pentamimo, Pentamimo.Rotation.ROT0))
-            return true ;
-        if(checkForRotation(pentamimo, Pentamimo.Rotation.ROT90))
+        if (checkForRotation(pentamimo, Pentamimo.Rotation.ROT0))
             return true;
-        if(checkForRotation(pentamimo, Pentamimo.Rotation.ROT180))
+        if (checkForRotation(pentamimo, Pentamimo.Rotation.ROT90))
             return true;
-        if(checkForRotation(pentamimo, Pentamimo.Rotation.ROT270))
-            return true ;
+        if (checkForRotation(pentamimo, Pentamimo.Rotation.ROT180))
+            return true;
+        if (checkForRotation(pentamimo, Pentamimo.Rotation.ROT270))
+            return true;
         return false;
     }
 

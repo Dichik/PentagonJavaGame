@@ -276,6 +276,12 @@ public class PlayingState extends GameState {
         return Integer.toString(cnt);
     }
 
+    /**
+     * Bug #7
+     * when we move our figure and it cross black square,
+     * then a number in the SIZE line / row increase by one
+     */
+
     private void drawGrid(Graphics graphics) {
         if(!grid.canPlacePentamimoAnywhere(currentPentamimo)){
             drawGameOverMessage(graphics);
@@ -286,34 +292,35 @@ public class PlayingState extends GameState {
             for (int j = 0; j < Grid.SIZE; j++) {
                 Square square = this.grid.getLine(i)[j];
                 if (i == Grid.SIZE - 1 || j == Grid.SIZE - 1) {
+                    if(i == 0) continue;
                     if (j == Grid.SIZE - 1)
-                        graphics.drawString(countSquares(i - 1, true), j * 30 + 10, i * 30 - 10);
-                    else graphics.drawString(countSquares(j, false), j * 30 + 10, i * 30 - 10 + 30);
+                        graphics.drawString(countSquares(i - 1, true), j * 30 + 110, i * 30 - 10 + 100);
+                    else graphics.drawString(countSquares(j, false), j * 30 + 110, i * 30 - 10 + 30 + 100);
                     continue;
                 }
                 if (square != null) {
                     if (square.hasAnotherColor()) {
                         graphics.drawImage(ResourceManager.texture("block_" +
-                                "green" + ".png"), j * 30, i * 30, 30, 30, null);
+                                "green" + ".png"), j * 30 + 100, i * 30 + 100, 30, 30, null);
                         continue;
                     }
                     if (!square.isFixed())
                         graphics.drawImage(ResourceManager.texture("block_" +
                                 square.getColor()
-                                + ".png"), j * 30, i * 30, 30, 30, null);
+                                + ".png"), j * 30 + 100, i * 30 + 100, 30, 30, null);
                     else {
                         graphics.drawImage(ResourceManager.texture("block_" +
                                 square.getColor()
-                                + "_dark.png"), j * 30, i * 30, 30, 30, null);
+                                + "_dark.png"), j * 30 + 100, i * 30 + 100, 30, 30, null);
                     }
                 } else {
                     Pair pair = new Pair(j, i);
                     if (find(blockedSquares, pair)) {
                         graphics.drawImage(ResourceManager.texture("block_blue_dark.png"),
-                                j * 30, i * 30, 30, 30, null);
+                                j * 30 + 100, i * 30 + 100, 30, 30, null);
                     } else {
                         graphics.drawImage(ResourceManager.texture("block_void.png"),
-                                j * 30, i * 30, 30, 30, null);
+                                j * 30 + 100, i * 30 + 100, 30, 30, null);
                     }
                 }
             }
