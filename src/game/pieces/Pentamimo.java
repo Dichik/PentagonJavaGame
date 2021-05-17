@@ -1,6 +1,7 @@
 package game.pieces;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Pentamimo {
 
@@ -122,6 +123,7 @@ public class Pentamimo {
         this.color = color;
         this.size = size;
         LIST.add(this);
+        Collections.shuffle(LIST);
     }
 
     public Square getSquareAt(Rotation currentRotation, int x, int y) {

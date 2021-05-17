@@ -255,6 +255,7 @@ public class PlayingState extends GameState {
         graphics.setFont(new Font("Roboto", Font.ITALIC + Font.BOLD, 16));
         graphics.drawString("Next:", 820, 30);
 
+        graphics.drawRect(70, 70, 420, 420);
     }
 
     private String countSquares(int x, boolean line) {
