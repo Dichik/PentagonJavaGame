@@ -123,6 +123,7 @@ public class Pentamimo {
         this.color = color;
         this.size = size;
         LIST.add(this);
+
         Collections.shuffle(LIST);
     }
 

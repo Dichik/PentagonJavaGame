@@ -303,7 +303,7 @@ public class Grid {
         }
     }
 
-    public boolean canPlacePentamimoAnywhere(Pentamimo pentamimo) {
+    public boolean foundPlaceForPentamimo(Pentamimo pentamimo) {
         if (checkForRotation(pentamimo, Pentamimo.Rotation.ROT0))
             return true;
         if (checkForRotation(pentamimo, Pentamimo.Rotation.ROT90))
@@ -336,15 +336,43 @@ public class Grid {
         int diffByY = maxY - minY + 1;
         int diffByX = maxX - minX + 1;
 
-        //System.out.println("Difference: " + diffByX + " " + diffByY);
-        for (int i = 0; i < Grid.SIZE - 1 - diffByX; i++) {
-            for (int j = 0; j < Grid.SIZE - 2 - diffByY; j++) {
-                //check all sides
+        int ROWS = Grid.SIZE - diffByX;
+        int COLUMNS = Grid.SIZE - diffByY;
+
+        for (int i = 0; i < ROWS - 2; i++) {
+            for (int j = 0; j < COLUMNS - 2; j++) {
+                boolean was = true;
+                for (int q = 0; q < 10; q += 2) {
+                    int coordinateX = blocks[rotation.getPosInArray()][q];
+                    int coordinateY = blocks[rotation.getPosInArray()][q + 1];
+                    if (this.singlePieces[coordinateY + i][coordinateX + i] == null) {
+                        if (i + coordinateY < ROWS && singlePieces[i + coordinateY + 1][j + coordinateX] != null)
+                            was = false;
+                        if (i + coordinateY > 0 && singlePieces[i + coordinateY - 1][j + coordinateX] != null)
+                            was = false;
+                        if (j + coordinateX < COLUMNS && singlePieces[i + coordinateY][j + coordinateX + 1] != null)
+                            was = false;
+                        if (j + coordinateX > 0 && singlePieces[i + coordinateY][j + coordinateX - 1] != null)
+                            was = false;
+                        if (i + coordinateY > 0 && j + coordinateX < COLUMNS
+                                && singlePieces[i + coordinateY - 1][j + coordinateX + 1] != null)
+                            was = false;
+                        if (i + coordinateY > 0 && j + coordinateX > 0
+                                && singlePieces[i + coordinateY - 1][j + coordinateX - 1] != null)
+                            was = false;
+                        if (i + coordinateY < ROWS && j + coordinateX < COLUMNS && singlePieces[i + coordinateY + 1][j + coordinateX + 1] != null)
+                            was = false;
+                        if (j + coordinateX > 0 && i + coordinateY < ROWS
+                                && singlePieces[i + coordinateY + 1][j + coordinateX - 1] != null)
+                            was = false;
+                    }
+                }
+                if (was) return true;
             }
         }
-        return true;
+        return false;
     }
-/**
+/** !!!
  * when we touch the 16-th place we draw that line in light grey color
  * so that the user could see number of used squares in the line.
  */

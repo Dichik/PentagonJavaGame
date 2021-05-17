@@ -86,7 +86,7 @@ public class PlayingState extends GameState {
         this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
 
         blockedSquares = new ArrayList<>();
-        createBlockedSquares();
+        //createBlockedSquares();
 
         this.placePentamimo();
 
@@ -111,6 +111,8 @@ public class PlayingState extends GameState {
         this.drawGrid(graphics);
         this.drawQueue(graphics);
 
+        // <- check if we can place a pentamimo anywhere
+        lost = !this.grid.foundPlaceForPentamimo(queue.peek());
         if (this.lost)
             this.drawGameOverMessage(graphics);
     }
@@ -138,6 +140,11 @@ public class PlayingState extends GameState {
         return false;
     }
 
+    /** Bug #9
+     * if lost == true
+     * then we can't move figures or perform any operation
+     * @param key
+     */
     @Override
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_RIGHT) {
@@ -166,7 +173,9 @@ public class PlayingState extends GameState {
                     Arrays.sort(scores);
                     ResourceManager.writeScores(getReversed(scores));
                 }
-                Game.STATE_MANAGER.backToPrevious();
+                Game.STATE_MANAGER.clearStack();
+                Game.STATE_MANAGER.changeState(new MainMenu());
+                Pentamimo.USED = 0;
             }
         } else if (key == KeyEvent.VK_ENTER) {
             if (thereNoGreenPieces()) {
@@ -284,7 +293,7 @@ public class PlayingState extends GameState {
      */
 
     private void drawGrid(Graphics graphics) {
-        if(!grid.canPlacePentamimoAnywhere(currentPentamimo)){
+        if(!grid.foundPlaceForPentamimo(currentPentamimo)){
             drawGameOverMessage(graphics);
             return ;
         }
