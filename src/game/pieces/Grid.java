@@ -316,58 +316,87 @@ public class Grid {
     }
 
     private boolean checkForRotation(Pentamimo pentamimo, Pentamimo.Rotation rotation) {
-        int maxX = -1;
-        int minX = 20;
-        int maxY = -1;
-        int minY = 20;
         int[][] blocks = pentamimo.getBlocksPositions();
+//
+//        int diffByY = maxY - minY + 1;
+//        int diffByX = maxX - minX + 1;
+//
+//        int ROWS = Grid.SIZE - diffByX;
+//        int COLUMNS = Grid.SIZE - diffByY;
+//
+//        for (int i = 0; i < ROWS - 2; i++) {
+//            for (int j = 0; j < COLUMNS - 2; j++) {
+//                boolean was = true;
+//                for (int q = 0; q < 10; q += 2) {
+//                    int coordinateX = blocks[rotation.getPosInArray()][q];
+//                    int coordinateY = blocks[rotation.getPosInArray()][q + 1];
+//                    if (this.singlePieces[coordinateY + i][coordinateX + j] == null) {
+//                        if (i + coordinateY < ROWS && singlePieces[i + coordinateY + 1][j + coordinateX] != null)
+//                            was = false;
+//                        if (i + coordinateY > 0 && singlePieces[i + coordinateY - 1][j + coordinateX] != null)
+//                            was = false;
+//                        if (j + coordinateX < COLUMNS && singlePieces[i + coordinateY][j + coordinateX + 1] != null)
+//                            was = false;
+//                        if (j + coordinateX > 0 && singlePieces[i + coordinateY][j + coordinateX - 1] != null)
+//                            was = false;
+//                        if (i + coordinateY > 0 && j + coordinateX < COLUMNS
+//                                && singlePieces[i + coordinateY - 1][j + coordinateX + 1] != null)
+//                            was = false;
+//                        if (i + coordinateY > 0 && j + coordinateX > 0
+//                                && singlePieces[i + coordinateY - 1][j + coordinateX - 1] != null)
+//                            was = false;
+//                        if (i + coordinateY < ROWS && j + coordinateX < COLUMNS && singlePieces[i + coordinateY + 1][j + coordinateX + 1] != null)
+//                            was = false;
+//                        if (j + coordinateX > 0 && i + coordinateY < ROWS
+//                                && singlePieces[i + coordinateY + 1][j + coordinateX - 1] != null)
+//                            was = false;
+//                    }
+//                }
+//                if (was) return true;
+//            }
+//        }
 
-        for (int i = 0; i < 10; i++) {
-            int coordinate = blocks[rotation.getPosInArray()][i];
-            if (i % 2 == 0) {
-                maxX = Math.max(maxX, coordinate);
-                minX = Math.min(minX, coordinate);
-            } else {
-                maxY = Math.max(maxY, coordinate);
-                minY = Math.min(minY, coordinate);
-            }
-        }
-
-        int diffByY = maxY - minY + 1;
-        int diffByX = maxX - minX + 1;
-
-        int ROWS = Grid.SIZE - diffByX;
-        int COLUMNS = Grid.SIZE - diffByY;
-
-        for (int i = 0; i < ROWS - 2; i++) {
-            for (int j = 0; j < COLUMNS - 2; j++) {
+        /**
+         * ??? has a bug, but where
+         */
+        for (int i = 1; i < SIZE - 1; i++) {
+            for (int j = 0; j < SIZE - 1; j++) {
                 boolean was = true;
                 for (int q = 0; q < 10; q += 2) {
                     int coordinateX = blocks[rotation.getPosInArray()][q];
                     int coordinateY = blocks[rotation.getPosInArray()][q + 1];
-                    if (this.singlePieces[coordinateY + i][coordinateX + i] == null) {
-                        if (i + coordinateY < ROWS && singlePieces[i + coordinateY + 1][j + coordinateX] != null)
+
+                    System.out.println(coordinateX + " " + coordinateY);
+
+                    if (coordinateX + j < SIZE - 2 && coordinateY + i < SIZE - 2
+                            && this.singlePieces[coordinateY + i][coordinateX + j] == null) {
+                        //add a case when there is a blocked square
+                        if (i + coordinateY + 1 < SIZE - 2 && this.singlePieces[coordinateY + i + 1][coordinateX + j] != null)
                             was = false;
-                        if (i + coordinateY > 0 && singlePieces[i + coordinateY - 1][j + coordinateX] != null)
+                        if (i + coordinateY - 1 >= 0 && this.singlePieces[coordinateY + i - 1][coordinateX + j] != null)
                             was = false;
-                        if (j + coordinateX < COLUMNS && singlePieces[i + coordinateY][j + coordinateX + 1] != null)
+                        if (coordinateX + j + 1 < SIZE - 2 && this.singlePieces[coordinateY + i][coordinateX + j + 1] != null)
                             was = false;
-                        if (j + coordinateX > 0 && singlePieces[i + coordinateY][j + coordinateX - 1] != null)
+                        if (coordinateX + j - 1 >= 0 && this.singlePieces[coordinateY + i][coordinateX + j - 1] != null)
                             was = false;
-                        if (i + coordinateY > 0 && j + coordinateX < COLUMNS
-                                && singlePieces[i + coordinateY - 1][j + coordinateX + 1] != null)
+                        if (coordinateY + i + 1 < SIZE - 2 && coordinateX + j - 1 >= 0
+                                && this.singlePieces[coordinateY + i + 1][coordinateX + j - 1] != null)
                             was = false;
-                        if (i + coordinateY > 0 && j + coordinateX > 0
-                                && singlePieces[i + coordinateY - 1][j + coordinateX - 1] != null)
+                        if (coordinateY + i + 1 < SIZE - 2 && coordinateX + j + 1 < SIZE - 2
+                                && this.singlePieces[coordinateY + i + 1][coordinateX + j + 1] != null)
                             was = false;
-                        if (i + coordinateY < ROWS && j + coordinateX < COLUMNS && singlePieces[i + coordinateY + 1][j + coordinateX + 1] != null)
+                        if (coordinateY + i - 1 >= 0 && coordinateX + j - 1 >= 0
+                                && this.singlePieces[coordinateY + i - 1][coordinateX + j - 1] != null)
                             was = false;
-                        if (j + coordinateX > 0 && i + coordinateY < ROWS
-                                && singlePieces[i + coordinateY + 1][j + coordinateX - 1] != null)
+                        if (coordinateY + i - 1 >= 0 && coordinateX + j + 1 < SIZE - 2
+                                && this.singlePieces[coordinateY + i - 1][coordinateX + j + 1] != null)
                             was = false;
                     }
                 }
-                if (was) return true;
+                if (was) {
+                    //System.out.println(i + " " + j);
+                    return true;
+                }
             }
         }
         return false;

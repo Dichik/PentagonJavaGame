@@ -167,12 +167,12 @@ public class PlayingState extends GameState {
             if (!lost) {
                 Game.STATE_MANAGER.changeState(new PauseMenu());
             } else {
-                int[] scores = ResourceManager.readTopScores();
-                if (this.points > scores[8]) {
-                    scores[8] = this.points;
-                    Arrays.sort(scores);
-                    ResourceManager.writeScores(getReversed(scores));
-                }
+//                int[] scores = ResourceManager.readTopScores();
+//                if (this.points > scores[8]) {
+//                    scores[8] = this.points;
+//                    Arrays.sort(scores);
+//                    ResourceManager.writeScores(getReversed(scores));
+//                }
                 Game.STATE_MANAGER.clearStack();
                 Game.STATE_MANAGER.changeState(new MainMenu());
                 Pentamimo.USED = 0;
