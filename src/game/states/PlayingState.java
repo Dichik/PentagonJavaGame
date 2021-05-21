@@ -108,14 +108,11 @@ public class PlayingState extends GameState {
                 e.printStackTrace();
             }
         }
-
+        stopPieces();
         if (!lost) {
-            stopPieces();
             nextPiece();
         }
     }
-
-    public boolean firstTime = false;
 
     @Override
     public void render(Graphics graphics) {
@@ -123,22 +120,12 @@ public class PlayingState extends GameState {
         this.drawGrid(graphics);
         this.drawQueue(graphics);
 
-        if (!queue.isEmpty())
-            lost = !this.grid.foundPlaceForPentamimo(currentPentamimo);
-
-        if (lost) {
-            try {
-                //drawMatrix();
-                //drawGrid(graphics);
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if (!this.grid.foundPlaceForPentamimo(currentPentamimo)) {
+            lost = true;
         }
 
-        if (this.lost && !firstTime) {
+        if (this.lost) {
             this.drawGameOverMessage(graphics);
-            firstTime = true;
         }
         /**
          * Bug #13
@@ -208,11 +195,11 @@ public class PlayingState extends GameState {
                 Game.STATE_MANAGER.clearStack();
                 Game.STATE_MANAGER.changeState(new MainMenu());
                 Pentamimo.USED = 0;
+                lost = false;
             }
         } else if (key == KeyEvent.VK_ENTER) {
             if (thereNoGreenPieces()) {
                 if (grid.canSet()){
-                    //System.out.println("Was there");
                     grid.setAllSquaresToBeStopped();
                 }
             }
@@ -262,7 +249,7 @@ public class PlayingState extends GameState {
     }
 
     private void nextPiece() {
-        if (this.grid.allSquaresAreFixed() && thereNoGreenPieces()) {
+        if (this.grid.allSquaresAreFixed() && thereNoGreenPieces() && !lost) {
             this.placePentamimo();
         }
     }
@@ -393,25 +380,24 @@ public class PlayingState extends GameState {
     }
 
     private void drawGameOverMessage(Graphics graphics) {
-//        graphics.setColor(Color.BLACK);
-//        graphics.fillRect(0, Window.HEIGHT / 2 - 30, Window.WIDTH, 70);
-//        graphics.setColor(Color.RED);
-//        graphics.setFont(new Font("Arial", Font.PLAIN, 30));
-//        graphics.drawString("Game Over!", 15, Window.HEIGHT / 2);
-//        graphics.setFont(new Font("Arial", Font.PLAIN, 14));
-//        graphics.drawString("Press esc to return to title screen", 15, Window.HEIGHT / 2 + 30);
-//        int userOption = JOptionPane.showConfirmDialog(Window.window,
-//                "Game Over!\n" + "Press esc to return to title screen");
+        stopPieces();
+        graphics.setColor(Color.BLACK);
+        graphics.fillRect(0, Window.HEIGHT / 2 - 30, Window.WIDTH, 70);
+        graphics.setColor(Color.RED);
+        graphics.setFont(new Font("Arial", Font.PLAIN, 30));
+        graphics.drawString("Game Over!", 15, Window.HEIGHT / 2);
+        graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+        graphics.drawString("Press esc to return to title screen", 15, Window.HEIGHT / 2 + 30);
 
-        JOptionPane.showMessageDialog(Window.window, "Game Over!\n" + "Press esc to return to title screen");
-
-        Game.STATE_MANAGER.clearStack();
-        Game.STATE_MANAGER.changeState(new MainMenu());
-        Pentamimo.USED = 0;
-        lost = false;
+        /**
+         * go to the pause menu -> but add a parameter that will block "continue"
+         */
     }
 
     private void placePentamimo() {
+        if(lost){
+            return ;
+        }
         try {
             if (!queue.isEmpty())
                 this.currentPentamimo = this.queue.poll();
@@ -424,10 +410,9 @@ public class PlayingState extends GameState {
                 this.currentPentamimo = null;
                 return;
             }
-
             this.currentRotation = Pentamimo.Rotation.ROT0;
             if (Pentamimo.USED <= Pentamimo.LIST.size() || !queue.isEmpty())
-                if (currentPentamimo != null)
+                if (currentPentamimo != null && this.grid.foundPlaceForPentamimo(currentPentamimo))
                     this.grid.placePentamimo(currentPentamimo, 0, 0, currentRotation);
 
             if (Pentamimo.USED < Pentamimo.LIST.size())
