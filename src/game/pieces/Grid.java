@@ -329,38 +329,48 @@ public class Grid {
             }
         }
 
-        /**
-         * ??? has a bug, but where
-         */
         for (int i = 1; i < SIZE - 1; i++) {
             for (int j = 0; j < SIZE - 1; j++) {
                 boolean foundPlace = true;
                 for (int q = 0; q < 10; q += 2) {
-                    int coordinateX = blocks[rotation.getPosInArray()][q];
-                    int coordinateY = blocks[rotation.getPosInArray()][q + 1];
+                    int coordinateY = blocks[rotation.getPosInArray()][q];
+                    int coordinateX = blocks[rotation.getPosInArray()][q + 1];
 
                     if (coordinateX + j < SIZE - 1 && coordinateY + i < SIZE - 1
                             && matrix[coordinateY + i][coordinateX + j] == 0) {
-                        if( coordinateY + i + 1 < SIZE - 1 && matrix[coordinateY + i + 1][coordinateX + j] != 0)
+                        if (coordinateY + i + 1 < SIZE - 1 && matrix[coordinateY + i + 1][coordinateX + j] != 0)
                             foundPlace = false;
-                        if(coordinateY + i - 1 >= 0 && matrix[coordinateY + i - 1][coordinateX + j] != 0)
+                        if (coordinateY + i - 1 >= 0 && matrix[coordinateY + i - 1][coordinateX + j] != 0)
                             foundPlace = false;
-                        if(coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i][coordinateX + j + 1] != 0)
+                        if (coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i][coordinateX + j + 1] != 0)
                             foundPlace = false;
-                        if(coordinateX + j - 1 >= 0 && matrix[coordinateY + i][coordinateX + j - 1] != 0)
+                        if (coordinateX + j - 1 >= 0 && matrix[coordinateY + i][coordinateX + j - 1] != 0)
                             foundPlace = false;
-                        if(coordinateY + i + 1 < SIZE - 1 && coordinateX + j - 1 >= 0 && matrix[coordinateY + i + 1][coordinateX + j - 1] != 0)
+                        if (coordinateY + i + 1 < SIZE - 1 && coordinateX + j - 1 >= 0 && matrix[coordinateY + i + 1][coordinateX + j - 1] != 0)
                             foundPlace = false;
-                        if(coordinateY + i + 1 < SIZE - 1 && coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i + 1][coordinateX + j + 1] != 0)
+                        if (coordinateY + i + 1 < SIZE - 1 && coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i + 1][coordinateX + j + 1] != 0)
                             foundPlace = false;
-                        if(coordinateY + i - 1 >= 0 && coordinateX + j - 1 >= 0 && matrix[coordinateY + i - 1][coordinateX + j - 1] != 0)
+                        if (coordinateY + i - 1 >= 0 && coordinateX + j - 1 >= 0 && matrix[coordinateY + i - 1][coordinateX + j - 1] != 0)
                             foundPlace = false;
-                        if(coordinateY + i - 1 >= 0 && coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i - 1][coordinateX + j + 1] != 0)
+                        if (coordinateY + i - 1 >= 0 && coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i - 1][coordinateX + j + 1] != 0)
                             foundPlace = false;
 
                     } else foundPlace = false;
                 }
                 if (foundPlace) {
+                    for (int q = 0; q < 10; q += 2) {
+                        int coordinateY = blocks[rotation.getPosInArray()][q];
+                        int coordinateX = blocks[rotation.getPosInArray()][q + 1];
+                        matrix[coordinateY + i][coordinateX + j] = 2 ;
+                    }
+
+                    for(int u = 0; u < SIZE - 1; u ++){
+                        for(int p = 0 ; p < SIZE - 1; p ++ ){
+                            System.out.print(matrix[u][p] + " ");
+                        }
+                        System.out.print("\n");
+                    }
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
                     return true;
                 }
             }

@@ -100,29 +100,41 @@ public class PlayingState extends GameState {
 
     @Override
     public void tick() {
+
+        if (lost) {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (!lost) {
             stopPieces();
             nextPiece();
         }
     }
+
     public boolean firstTime = false;
+
     @Override
     public void render(Graphics graphics) {
         this.drawBackground(graphics);
         this.drawGrid(graphics);
         this.drawQueue(graphics);
 
-        // <- check if we can place a pentamimo anywhere
-        if(!queue.isEmpty())
-            lost = !this.grid.foundPlaceForPentamimo(queue.peek());
+        if (!queue.isEmpty())
+            lost = !this.grid.foundPlaceForPentamimo(currentPentamimo);
 
-//        if(lost){
-//            try {
-//                TimeUnit.SECONDS.sleep(10);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        if (lost) {
+            try {
+                //drawMatrix();
+                //drawGrid(graphics);
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (this.lost && !firstTime) {
             this.drawGameOverMessage(graphics);
@@ -165,11 +177,6 @@ public class PlayingState extends GameState {
         return false;
     }
 
-    /** Bug #9
-     * if lost == true
-     * then we can't move figures or perform any operation
-     * @param key
-     */
     @Override
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_RIGHT) {
@@ -204,7 +211,10 @@ public class PlayingState extends GameState {
             }
         } else if (key == KeyEvent.VK_ENTER) {
             if (thereNoGreenPieces()) {
-                if (grid.canSet()) grid.setAllSquaresToBeStopped();
+                if (grid.canSet()){
+                    //System.out.println("Was there");
+                    grid.setAllSquaresToBeStopped();
+                }
             }
         } else if (key == KeyEvent.VK_SPACE && !lost) {
             this.rotateClockwise();
@@ -318,16 +328,11 @@ public class PlayingState extends GameState {
      */
 
     private void drawGrid(Graphics graphics) {
-        if(!grid.foundPlaceForPentamimo(currentPentamimo)){
-            drawGameOverMessage(graphics);
-            return ;
-        }
-
         for (int i = 0; i < Grid.SIZE; i++) {
             for (int j = 0; j < Grid.SIZE; j++) {
                 Square square = this.grid.getLine(i)[j];
                 if (i == Grid.SIZE - 1 || j == Grid.SIZE - 1) {
-                    if(i == 0) continue;
+                    if (i == 0) continue;
                     if (j == Grid.SIZE - 1)
                         graphics.drawString(countSquares(i - 1, true), j * 30 + 110, i * 30 - 10 + 100);
                     else graphics.drawString(countSquares(j, false), j * 30 + 110, i * 30 - 10 + 30 + 100);
@@ -395,13 +400,15 @@ public class PlayingState extends GameState {
 //        graphics.drawString("Game Over!", 15, Window.HEIGHT / 2);
 //        graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 //        graphics.drawString("Press esc to return to title screen", 15, Window.HEIGHT / 2 + 30);
-        int userOption = JOptionPane.showConfirmDialog(Window.window,
-                "Game Over!\n" + "Press esc to return to title screen");
-        if(userOption == 0) {
-            Game.STATE_MANAGER.clearStack();
-            Game.STATE_MANAGER.changeState(new MainMenu());
-            Pentamimo.USED = 0;
-        }
+//        int userOption = JOptionPane.showConfirmDialog(Window.window,
+//                "Game Over!\n" + "Press esc to return to title screen");
+
+        JOptionPane.showMessageDialog(Window.window, "Game Over!\n" + "Press esc to return to title screen");
+
+        Game.STATE_MANAGER.clearStack();
+        Game.STATE_MANAGER.changeState(new MainMenu());
+        Pentamimo.USED = 0;
+        lost = false;
     }
 
     private void placePentamimo() {
