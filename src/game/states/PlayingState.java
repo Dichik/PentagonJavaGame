@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import framework.display.Window;
 import game.pieces.Pentamimo;
@@ -104,7 +105,7 @@ public class PlayingState extends GameState {
             nextPiece();
         }
     }
-
+    public boolean firstTime = false;
     @Override
     public void render(Graphics graphics) {
         this.drawBackground(graphics);
@@ -112,9 +113,33 @@ public class PlayingState extends GameState {
         this.drawQueue(graphics);
 
         // <- check if we can place a pentamimo anywhere
-        lost = !this.grid.foundPlaceForPentamimo(queue.peek());
-        if (this.lost)
+        if(!queue.isEmpty())
+            lost = !this.grid.foundPlaceForPentamimo(queue.peek());
+
+//        if(lost){
+//            try {
+//                TimeUnit.SECONDS.sleep(10);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        if (this.lost && !firstTime) {
             this.drawGameOverMessage(graphics);
+            firstTime = true;
+        }
+        /**
+         * Bug #13
+         * Add a button or a small instruction on the left panel
+         * there add a button to get a tip -> place where we can place a pentamimo and
+         * draw it in the grey for a second
+         */
+
+
+        /**
+         * Bug #11
+         * change drawGameOverMessage -> message with options = stay | left | restart
+         */
     }
 
     private void createBlockedSquares() {
@@ -363,13 +388,20 @@ public class PlayingState extends GameState {
     }
 
     private void drawGameOverMessage(Graphics graphics) {
-        graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, Window.HEIGHT / 2 - 30, Window.WIDTH, 70);
-        graphics.setColor(Color.RED);
-        graphics.setFont(new Font("Arial", Font.PLAIN, 30));
-        graphics.drawString("Game Over!", 15, Window.HEIGHT / 2);
-        graphics.setFont(new Font("Arial", Font.PLAIN, 14));
-        graphics.drawString("Press esc to return to title screen", 15, Window.HEIGHT / 2 + 30);
+//        graphics.setColor(Color.BLACK);
+//        graphics.fillRect(0, Window.HEIGHT / 2 - 30, Window.WIDTH, 70);
+//        graphics.setColor(Color.RED);
+//        graphics.setFont(new Font("Arial", Font.PLAIN, 30));
+//        graphics.drawString("Game Over!", 15, Window.HEIGHT / 2);
+//        graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+//        graphics.drawString("Press esc to return to title screen", 15, Window.HEIGHT / 2 + 30);
+        int userOption = JOptionPane.showConfirmDialog(Window.window,
+                "Game Over!\n" + "Press esc to return to title screen");
+        if(userOption == 0) {
+            Game.STATE_MANAGER.clearStack();
+            Game.STATE_MANAGER.changeState(new MainMenu());
+            Pentamimo.USED = 0;
+        }
     }
 
     private void placePentamimo() {
