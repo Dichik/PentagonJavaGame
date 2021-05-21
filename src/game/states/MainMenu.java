@@ -17,7 +17,6 @@ public class MainMenu extends GameState {
     protected void init() {
         options = new String[]{
                 "Start Game", //<- we should choose a level after clicking here.
-                "Highlights",
                 "Info",
                 "Exit"
         };
@@ -35,6 +34,10 @@ public class MainMenu extends GameState {
         drawOptions(graphics);
     }
 
+    /**
+     * add 4-th option
+     * @param key
+     */
     @Override
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_DOWN) {
@@ -42,13 +45,11 @@ public class MainMenu extends GameState {
         } else if (key == KeyEvent.VK_UP) {
             if (selected > 0)
                 selected--;
-            else selected = 3;
+            else selected = 2;
         } else if (key == KeyEvent.VK_ENTER) {
             if (selected == 0)
                 Game.STATE_MANAGER.changeState(new PlayingState());
             else if (selected == 1)
-                Game.STATE_MANAGER.changeState(new HighestScoreMenu());
-            else if (selected == 2)
                 Game.STATE_MANAGER.changeState(new Info());
             else {
                 System.exit(0);

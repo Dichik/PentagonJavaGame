@@ -66,15 +66,6 @@ public class PlayingState extends GameState {
 
     private Pentamimo hold;
 
-    private int points;
-    /**
-     * points should be calculated by special formula
-     * (max_minutes - level_minutes) / 2 + level_minutes - finish_time
-     * Problems:
-     * 1.should calculate time
-     * 2.should create a timer
-     * ...
-     */
     private boolean lost;
 
     @Override
@@ -170,12 +161,6 @@ public class PlayingState extends GameState {
             if (!lost) {
                 Game.STATE_MANAGER.changeState(new PauseMenu());
             } else {
-//                int[] scores = ResourceManager.readTopScores();
-//                if (this.points > scores[8]) {
-//                    scores[8] = this.points;
-//                    Arrays.sort(scores);
-//                    ResourceManager.writeScores(getReversed(scores));
-//                }
                 Game.STATE_MANAGER.clearStack();
                 Game.STATE_MANAGER.changeState(new MainMenu());
                 Pentamimo.USED = 0;
@@ -189,25 +174,7 @@ public class PlayingState extends GameState {
             }
         } else if (key == KeyEvent.VK_SPACE && !lost) {
             this.rotateClockwise();
-        } else if (key == KeyEvent.VK_S) {
-            drawMatrix();
         }
-    }
-
-    private void drawMatrix() {
-        for (int i = 0; i < Grid.SIZE; i++) {
-            for (int j = 0; j < Grid.SIZE; j++) {
-                if (this.grid.getLine(i)[j] != null) {
-                    if (this.grid.getLine(i)[j].isFixed())
-                        System.out.print(1 + " ");
-                    else System.out.print(0 + " ");
-                } else {
-                    System.out.print(0 + " ");
-                }
-            }
-            System.out.print("\n");
-        }
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
     public static Object[] getReversed(int[] arr) {
