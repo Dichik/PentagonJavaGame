@@ -100,16 +100,8 @@ public class PlayingState extends GameState {
 
     @Override
     public void tick() {
-
-        if (lost) {
-            try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        stopPieces();
         if (!lost) {
+            stopPieces();
             nextPiece();
         }
     }
@@ -120,9 +112,7 @@ public class PlayingState extends GameState {
         this.drawGrid(graphics);
         this.drawQueue(graphics);
 
-        if (!this.grid.foundPlaceForPentamimo(currentPentamimo)) {
-            lost = true;
-        }
+        lost = !this.grid.foundPlaceForPentamimo(currentPentamimo);
 
         if (this.lost) {
             this.drawGameOverMessage(graphics);
@@ -132,12 +122,6 @@ public class PlayingState extends GameState {
          * Add a button or a small instruction on the left panel
          * there add a button to get a tip -> place where we can place a pentamimo and
          * draw it in the grey for a second
-         */
-
-
-        /**
-         * Bug #11
-         * change drawGameOverMessage -> message with options = stay | left | restart
          */
     }
 
@@ -199,7 +183,7 @@ public class PlayingState extends GameState {
             }
         } else if (key == KeyEvent.VK_ENTER) {
             if (thereNoGreenPieces()) {
-                if (grid.canSet()){
+                if (grid.canSet()) {
                     grid.setAllSquaresToBeStopped();
                 }
             }
@@ -388,20 +372,15 @@ public class PlayingState extends GameState {
         graphics.drawString("Game Over!", 15, Window.HEIGHT / 2);
         graphics.setFont(new Font("Arial", Font.PLAIN, 14));
         graphics.drawString("Press esc to return to title screen", 15, Window.HEIGHT / 2 + 30);
-
-        /**
-         * go to the pause menu -> but add a parameter that will block "continue"
-         */
     }
 
     private void placePentamimo() {
-        if(lost){
-            return ;
-        }
         try {
-            if (!queue.isEmpty())
-                this.currentPentamimo = this.queue.poll();
-            else {
+            if (!queue.isEmpty()) {
+                if(this.grid.foundPlaceForPentamimo(queue.peek()))
+                    this.currentPentamimo = this.queue.poll();
+                else this.currentPentamimo = this.queue.peek();
+            } else {
                 JOptionPane.showMessageDialog(Window.window,
                         "Congratulations!\nYou've done that");
                 Game.STATE_MANAGER.clearStack();

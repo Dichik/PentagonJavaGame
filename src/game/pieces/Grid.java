@@ -358,19 +358,19 @@ public class Grid {
                     } else foundPlace = false;
                 }
                 if (foundPlace) {
-                    for (int q = 0; q < 10; q += 2) {
-                        int coordinateY = blocks[rotation.getPosInArray()][q];
-                        int coordinateX = blocks[rotation.getPosInArray()][q + 1];
-                        matrix[coordinateY + i][coordinateX + j] = 2 ;
-                    }
-
-                    for(int u = 0; u < SIZE - 1; u ++){
-                        for(int p = 0 ; p < SIZE - 1; p ++ ){
-                            System.out.print(matrix[u][p] + " ");
-                        }
-                        System.out.print("\n");
-                    }
-                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
+//                    for (int q = 0; q < 10; q += 2) {
+//                        int coordinateY = blocks[rotation.getPosInArray()][q];
+//                        int coordinateX = blocks[rotation.getPosInArray()][q + 1];
+//                        matrix[coordinateY + i][coordinateX + j] = 2 ;
+//                    }
+//
+//                    for(int u = 0; u < SIZE - 1; u ++){
+//                        for(int p = 0 ; p < SIZE - 1; p ++ ){
+//                            System.out.print(matrix[u][p] + " ");
+//                        }
+//                        System.out.print("\n");
+//                    }
+//                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
                     return true;
                 }
             }

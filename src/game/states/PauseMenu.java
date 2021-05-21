@@ -12,14 +12,8 @@ public class PauseMenu extends MainMenu {
 
     @Override
     protected void init() {
-        /**
-         * Bug #4
-         * Add option to restart the level.
-         * It means you can try to find the solution again for the same problem.
-         */
         this.options = new String[]{
                 "Continue",
-                "Restart",
                 "To Menu"
         };
     }
@@ -31,11 +25,6 @@ public class PauseMenu extends MainMenu {
 
     @Override
     public void keyPressed(int key) {
-        /**
-         * Bug #5
-         * when we go to menu, there should be a message
-         * about unsaved results of the current game
-         */
         if (key == KeyEvent.VK_DOWN) {
             selected = (selected + 1) % options.length;
         } else if (key == KeyEvent.VK_UP) {
@@ -45,7 +34,7 @@ public class PauseMenu extends MainMenu {
         } else if (key == KeyEvent.VK_ENTER) {
             if (selected == 0) {
                 Game.STATE_MANAGER.backToPrevious();
-            } else if (selected == 2) {
+            } else if (selected == 1) {
                 int userOption = JOptionPane.showConfirmDialog(Window.window,
                         "Attention!\n" + "Your results will be unsaved!");
                 if(userOption == 0) {
@@ -53,8 +42,6 @@ public class PauseMenu extends MainMenu {
                     Game.STATE_MANAGER.changeState(new MainMenu());
                     Pentamimo.USED = 0;
                 }
-            } else {
-                // add actions after algo things
             }
         } else if (key == KeyEvent.VK_ESCAPE) {
             Game.STATE_MANAGER.backToPrevious();
