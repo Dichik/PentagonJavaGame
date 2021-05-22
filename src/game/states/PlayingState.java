@@ -34,19 +34,7 @@ public class PlayingState extends GameState {
         public int getY() {
             return y;
         }
-
-        @Override
-        public boolean equals(Object o) {
-            Pair pair = (Pair) o;
-            return x == pair.x &&
-                    y == pair.y;
-        }
     }
-
-    /**
-     * when we choose level we also set the timer for solving this game
-     * and when the time is over we will get the massage about losing the game.
-     */
     private Grid grid;
 
     private Pentamimo.Rotation currentRotation;
@@ -60,26 +48,23 @@ public class PlayingState extends GameState {
 
     private boolean lost;
     private boolean showSolution = false;
+    private int showTimes = 5000;
 
     @Override
     protected void init() {
         this.grid = new Grid();
 
         this.queue = new ArrayBlockingQueue<>(4);
-        this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
-        this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
-        this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
+        for(int i = 0; i < 3; i ++)
+            this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
 
         blockedSquares = new ArrayList<>();
 
         createSolution();
-
         createBlockedSquares(answer);
-
         this.placePentamimo();
 
         this.hold = null;
-
         this.lost = false;
 
         System.out.println("[Game][States]: Created playing state");
@@ -98,8 +83,8 @@ public class PlayingState extends GameState {
         this.drawBackground(graphics);
         if (!showSolution) {
             this.drawGrid(graphics);
+            this.drawQueue(graphics);
         } else this.drawSolution(graphics);
-        this.drawQueue(graphics);
 
         if (!queue.isEmpty()) {
             lost = !this.grid.foundPlaceForPentamimo(currentPentamimo);
@@ -204,12 +189,12 @@ public class PlayingState extends GameState {
         return false;
     }
 
-    private boolean find(ArrayList<Pair> blockedSquares, Pair pair) {
+    private boolean find(Pair pair) {
         for (int i = 0; i < blockedSquares.size(); i++) {
-            if (pair.equals(blockedSquares.get(i))) {
-                return true;
+                if (blockedSquares.get(i).getX() == pair.getX()
+                        && blockedSquares.get(i).getY() == pair.getY())
+                    return true;
             }
-        }
         return false;
     }
 
@@ -313,8 +298,6 @@ public class PlayingState extends GameState {
         else return Integer.toString(inAnswer);
     }
 
-    private int showTimes = 5000;
-
     private void drawGrid(Graphics graphics) {
         int[][] matrix = grid.getMatrix();
 
@@ -339,8 +322,7 @@ public class PlayingState extends GameState {
                                 + "_dark.png"), j * 30 + 100, i * 30 + 100, 30, 30, null);
                     }
                 } else {
-                    Pair pair = new Pair(j, i);
-                    if (find(blockedSquares, pair)) {
+                    if (find(new Pair(j, i))) {
                         graphics.drawImage(ResourceManager.texture("block_blue_dark.png"),
                                 j * 30 + 100, i * 30 + 100, 30, 30, null);
                     } else {
@@ -366,8 +348,7 @@ public class PlayingState extends GameState {
                 if (answer[i][j] != 0) {
                     graphics.drawImage(ResourceManager.texture("block_orange_dark.png"), j * 30 + 100, i * 30 + 100, 30, 30, null);
                 } else {
-                    Pair pair = new Pair(j, i);
-                    if (find(blockedSquares, pair)) {
+                    if (find(new Pair(j, i))) {
                         graphics.drawImage(ResourceManager.texture("block_blue_dark.png"),
                                 j * 30 + 100, i * 30 + 100, 30, 30, null);
                     } else {
