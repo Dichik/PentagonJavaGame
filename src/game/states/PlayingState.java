@@ -78,6 +78,11 @@ public class PlayingState extends GameState {
         this.queue.add(Pentamimo.LIST.get(Pentamimo.USED++));
 
         blockedSquares = new ArrayList<>();
+
+        Solution solution = new Solution(Pentamimo.LIST);
+        solution.findSolution();
+        solution.drawSolution();
+
         //createBlockedSquares();
 
         this.placePentamimo();
