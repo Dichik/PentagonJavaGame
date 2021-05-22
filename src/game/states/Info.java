@@ -37,13 +37,7 @@ public class Info extends GameState {
     }
 
     private void drawBackground(Graphics graphics) {
-        graphics.setColor(new Color(54, 51, 51));
-        graphics.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-
-        graphics.setColor(new Color(255, 255, 255, 255));
-        graphics.drawRect(350, 50, 300, 450);
-        graphics.setColor(new Color(50, 47, 47, 255));
-        graphics.fillRect(351, 51, 299, 449);
+        MainMenu.coloring(graphics);
     }
 
     private void drawOptions(Graphics graphics) {
@@ -62,11 +56,7 @@ public class Info extends GameState {
 
     private void drawCenteredString(String option, int width, int height,
                                     Graphics graphics, int diffBetweenLines) {
-        FontMetrics fm = graphics.getFontMetrics();
-        int x = (width - fm.stringWidth(option)) / 2;
-        int y = (fm.getAscent() + (200 + 200 * diffBetweenLines -
-                (fm.getAscent() + fm.getDescent())) / 2);
-        graphics.drawString(option, x, y);
+        MainMenu.drawingCenteredOne(option, width, graphics, diffBetweenLines);
     }
 
     @Override

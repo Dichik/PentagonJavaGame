@@ -9,7 +9,6 @@ public class Grid {
         this.singlePieces = new Square[SIZE][SIZE];
     }
 
-
     public int[][] getMatrix() {
         return matrix;
     }
@@ -328,9 +327,11 @@ public class Grid {
         for (int i = 0; i < SIZE - 1; i++) {
             for (int j = 0; j < SIZE - 1; j++) {
                 if (getLine(i)[j] != null) {
-                    if (getLine(i)[j].isFixed() && !getLine(i)[j].getColor().equals("blue"))
-                        matrix[i][j] = 1;
-                    else matrix[i][j] = 0;
+                    if (getLine(i)[j].isFixed()) {
+                        if (!getLine(i)[j].containsBlue())
+                            matrix[i][j] = 1;
+                        else matrix[i][j] = 2;
+                    } else matrix[i][j] = 0;
                 } else matrix[i][j] = 0;
             }
         }
@@ -344,21 +345,29 @@ public class Grid {
 
                     if (coordinateX + j < SIZE - 1 && coordinateY + i < SIZE - 1
                             && matrix[coordinateY + i][coordinateX + j] == 0) {
-                        if (coordinateY + i + 1 < SIZE - 1 && matrix[coordinateY + i + 1][coordinateX + j] != 0)
+                        if (coordinateY + i + 1 < SIZE - 1 && matrix[coordinateY + i + 1][coordinateX + j] != 0
+                                && matrix[coordinateY + i + 1][coordinateX + j] != 2)
                             foundPlace = false;
-                        if (coordinateY + i - 1 >= 0 && matrix[coordinateY + i - 1][coordinateX + j] != 0)
+                        if (coordinateY + i - 1 >= 0 && matrix[coordinateY + i - 1][coordinateX + j] != 0
+                                && matrix[coordinateY + i - 1][coordinateX + j] != 2)
                             foundPlace = false;
-                        if (coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i][coordinateX + j + 1] != 0)
+                        if (coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i][coordinateX + j + 1] != 0
+                                && matrix[coordinateY + i][coordinateX + j + 1] != 2)
                             foundPlace = false;
-                        if (coordinateX + j - 1 >= 0 && matrix[coordinateY + i][coordinateX + j - 1] != 0)
+                        if (coordinateX + j - 1 >= 0 && matrix[coordinateY + i][coordinateX + j - 1] != 0
+                                && matrix[coordinateY + i][coordinateX + j - 1] != 2)
                             foundPlace = false;
-                        if (coordinateY + i + 1 < SIZE - 1 && coordinateX + j - 1 >= 0 && matrix[coordinateY + i + 1][coordinateX + j - 1] != 0)
+                        if (coordinateY + i + 1 < SIZE - 1 && coordinateX + j - 1 >= 0 && matrix[coordinateY + i + 1][coordinateX + j - 1] != 0
+                                && matrix[coordinateY + i + 1][coordinateX + j - 1] != 2)
                             foundPlace = false;
-                        if (coordinateY + i + 1 < SIZE - 1 && coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i + 1][coordinateX + j + 1] != 0)
+                        if (coordinateY + i + 1 < SIZE - 1 && coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i + 1][coordinateX + j + 1] != 0
+                                && matrix[coordinateY + i + 1][coordinateX + j + 1] != 2)
                             foundPlace = false;
-                        if (coordinateY + i - 1 >= 0 && coordinateX + j - 1 >= 0 && matrix[coordinateY + i - 1][coordinateX + j - 1] != 0)
+                        if (coordinateY + i - 1 >= 0 && coordinateX + j - 1 >= 0 && matrix[coordinateY + i - 1][coordinateX + j - 1] != 0
+                                && matrix[coordinateY + i - 1][coordinateX + j - 1] != 2)
                             foundPlace = false;
-                        if (coordinateY + i - 1 >= 0 && coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i - 1][coordinateX + j + 1] != 0)
+                        if (coordinateY + i - 1 >= 0 && coordinateX + j + 1 < SIZE - 1 && matrix[coordinateY + i - 1][coordinateX + j + 1] != 0
+                                && matrix[coordinateY + i - 1][coordinateX + j + 1] != 2)
                             foundPlace = false;
 
                     } else foundPlace = false;
@@ -367,7 +376,7 @@ public class Grid {
                     for (int q = 0; q < 10; q += 2) {
                         int coordinateY = blocks[rotation.getPosInArray()][q];
                         int coordinateX = blocks[rotation.getPosInArray()][q + 1];
-                        matrix[coordinateY + i][coordinateX + j] = 2 ;
+                        matrix[coordinateY + i][coordinateX + j] = 2;
                     }
                     return true;
                 }
@@ -375,8 +384,4 @@ public class Grid {
         }
         return false;
     }
-/** !!!
- * when we touch the 16-th place we draw that line in light grey color
- * so that the user could see number of used squares in the line.
- */
 }

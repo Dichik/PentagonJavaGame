@@ -39,18 +39,6 @@ public class Solution {
         hasSolution = found;
     }
 
-    public void drawSolution() {
-        if (hasSolution) {
-            for (int i = 0; i < SIZE - 1; i++) {
-                for (int j = 0; j < SIZE - 1; j++) {
-                    System.out.print(matrix[i][j] + " ");
-                }
-                System.out.print("\n");
-            }
-        }
-        System.out.println("~~~~~~~~~~~~~~~~~~~");
-    }
-
     public void findSolution() {
         int[][] b = new int[SIZE - 1][SIZE - 1];
 
@@ -60,7 +48,6 @@ public class Solution {
 
         foundPlaceForPentamimo(LIST, 0, b);
     }
-
 
     private void foundPlaceForPentamimo(ArrayList<Pentamimo> list, int x, int[][] res) {
         if (foundSolution()) {

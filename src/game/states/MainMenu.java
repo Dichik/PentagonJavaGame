@@ -62,6 +62,10 @@ public class MainMenu extends GameState {
     }
 
     private void drawBackground(Graphics graphics) {
+        coloring(graphics);
+    }
+
+    static void coloring(Graphics graphics) {
         graphics.setColor(new Color(54, 51, 51));
         graphics.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
@@ -86,6 +90,10 @@ public class MainMenu extends GameState {
 
     private void drawCenteredString(String option, int width, int height,
                                     Graphics graphics, int diffBetweenLines) {
+        drawingCenteredOne(option, width, graphics, diffBetweenLines);
+    }
+
+    static void drawingCenteredOne(String option, int width, Graphics graphics, int diffBetweenLines) {
         FontMetrics fm = graphics.getFontMetrics();
         int x = (width - fm.stringWidth(option)) / 2;
         int y = (fm.getAscent() + (200 + 200 * diffBetweenLines -

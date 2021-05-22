@@ -49,4 +49,8 @@ public class Square {
         }
         return false;
     }
+
+    public boolean containsBlue() {
+        return st.contains("blue");
+    }
 }
