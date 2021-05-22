@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 import framework.display.Window;
 import game.pieces.Pentamimo;
@@ -108,12 +107,6 @@ public class PlayingState extends GameState {
         if (this.lost) {
             this.drawGameOverMessage(graphics);
         }
-        /**
-         * Bug #13
-         * Add a button or a small instruction on the left panel
-         * there add a button to get a tip -> place where we can place a pentamimo and
-         * draw it in the grey for a second
-         */
     }
 
     private void createBlockedSquares() {
@@ -174,6 +167,10 @@ public class PlayingState extends GameState {
             }
         } else if (key == KeyEvent.VK_SPACE && !lost) {
             this.rotateClockwise();
+        } else if (key == KeyEvent.VK_H) {
+            if(!lost){
+                showTimes = 0;
+            }
         }
     }
 
@@ -264,8 +261,11 @@ public class PlayingState extends GameState {
      * when we move our figure and it cross black square,
      * then a number in the SIZE line / row increase by one
      */
+    private int showTimes = 5000;
 
     private void drawGrid(Graphics graphics) {
+        int[][] matrix = grid.getMatrix();
+
         for (int i = 0; i < Grid.SIZE; i++) {
             for (int j = 0; j < Grid.SIZE; j++) {
                 Square square = this.grid.getLine(i)[j];
@@ -276,6 +276,7 @@ public class PlayingState extends GameState {
                     else graphics.drawString(countSquares(j, false), j * 30 + 110, i * 30 - 10 + 30 + 100);
                     continue;
                 }
+
                 if (square != null) {
                     if (square.hasAnotherColor()) {
                         graphics.drawImage(ResourceManager.texture("block_" +
@@ -299,6 +300,12 @@ public class PlayingState extends GameState {
                     } else {
                         graphics.drawImage(ResourceManager.texture("block_void.png"),
                                 j * 30 + 100, i * 30 + 100, 30, 30, null);
+                        if(matrix[i][j] == 2 && showTimes <= 500){
+                            graphics.setColor(Color.GRAY);
+                            graphics.fillRect(j * 30 + 100 + 2, i * 30 + 100 + 2, 30 - 3, 30 - 3);
+                            graphics.setColor(Color.BLACK);
+                            showTimes ++;
+                        }
                     }
                 }
             }
@@ -344,7 +351,7 @@ public class PlayingState extends GameState {
     private void placePentamimo() {
         try {
             if (!queue.isEmpty()) {
-                if(this.grid.foundPlaceForPentamimo(queue.peek()))
+                if (this.grid.foundPlaceForPentamimo(queue.peek()))
                     this.currentPentamimo = this.queue.poll();
                 else this.currentPentamimo = this.queue.peek();
             } else {

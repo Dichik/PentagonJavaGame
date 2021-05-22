@@ -3,9 +3,15 @@ package game.pieces;
 public class Grid {
     public static final int SIZE = 13;
     private Square[][] singlePieces;
+    private int[][] matrix;
 
     public Grid() {
         this.singlePieces = new Square[SIZE][SIZE];
+    }
+
+
+    public int[][] getMatrix() {
+        return matrix;
     }
 
     public void placePentamimo(Pentamimo pentamimo, int locationX, int locationY, Pentamimo.Rotation rotation) {
@@ -318,7 +324,7 @@ public class Grid {
     private boolean checkForRotation(Pentamimo pentamimo, Pentamimo.Rotation rotation) {
         int[][] blocks = pentamimo.getBlocksPositions();
 
-        int[][] matrix = new int[SIZE - 1][SIZE - 1];
+        matrix = new int[SIZE - 1][SIZE - 1];
         for (int i = 0; i < SIZE - 1; i++) {
             for (int j = 0; j < SIZE - 1; j++) {
                 if (getLine(i)[j] != null) {
@@ -329,7 +335,7 @@ public class Grid {
             }
         }
 
-        for (int i = 1; i < SIZE - 1; i++) {
+        for (int i = 0; i < SIZE - 1; i++) {
             for (int j = 0; j < SIZE - 1; j++) {
                 boolean foundPlace = true;
                 for (int q = 0; q < 10; q += 2) {
@@ -358,19 +364,11 @@ public class Grid {
                     } else foundPlace = false;
                 }
                 if (foundPlace) {
-//                    for (int q = 0; q < 10; q += 2) {
-//                        int coordinateY = blocks[rotation.getPosInArray()][q];
-//                        int coordinateX = blocks[rotation.getPosInArray()][q + 1];
-//                        matrix[coordinateY + i][coordinateX + j] = 2 ;
-//                    }
-//
-//                    for(int u = 0; u < SIZE - 1; u ++){
-//                        for(int p = 0 ; p < SIZE - 1; p ++ ){
-//                            System.out.print(matrix[u][p] + " ");
-//                        }
-//                        System.out.print("\n");
-//                    }
-//                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
+                    for (int q = 0; q < 10; q += 2) {
+                        int coordinateY = blocks[rotation.getPosInArray()][q];
+                        int coordinateX = blocks[rotation.getPosInArray()][q + 1];
+                        matrix[coordinateY + i][coordinateX + j] = 2 ;
+                    }
                     return true;
                 }
             }
