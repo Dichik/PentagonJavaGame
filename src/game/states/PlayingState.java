@@ -82,8 +82,9 @@ public class PlayingState extends GameState {
         Solution solution = new Solution(Pentamimo.LIST);
         solution.findSolution();
         solution.drawSolution();
+        int[][] answer = solution.getSolution();
 
-        //createBlockedSquares();
+        createBlockedSquares(answer);
 
         this.placePentamimo();
 
@@ -108,7 +109,9 @@ public class PlayingState extends GameState {
         this.drawGrid(graphics);
         this.drawQueue(graphics);
 
-        lost = !this.grid.foundPlaceForPentamimo(currentPentamimo);
+        if(!queue.isEmpty()){
+            lost = !this.grid.foundPlaceForPentamimo(currentPentamimo);
+        }
 
         if (this.lost) {
             this.drawGameOverMessage(graphics);
@@ -167,18 +170,34 @@ public class PlayingState extends GameState {
         return list.toArray();
     }
 
-    private void createBlockedSquares() {
+    private void createBlockedSquares(int[][] answer) {
         int BLOCKED_PIECES = 10;
         for (int i = 0; i < BLOCKED_PIECES; i++) {
-            Pair pair = new Pair(Math.abs(new Random().nextInt() % Grid.SIZE),
-                    Math.abs(new Random().nextInt() % Grid.SIZE));
-            if (!find(blockedSquares, pair)) {
+            Pair pair = new Pair(Math.abs(new Random().nextInt() % (Grid.SIZE - 1) ),
+                    Math.abs(new Random().nextInt() % (Grid.SIZE - 1) ));
+            if (answer[pair.getY()][pair.getX()] == 0 && !foundNear(answer, pair)) {
                 blockedSquares.add(pair);
                 this.grid.getLine(pair.getY())[pair.getX()] = new Square("blue");
                 this.grid.getLine(pair.getY())[pair.getX()].setFixed();
                 this.grid.getLine(pair.getY())[pair.getX()].setStopping();
             } else i--;
         }
+    }
+
+    private boolean foundNear(int[][] answer, Pair pair) {
+        for(int i = -1; i < pair.getY() + 1; i ++){
+            for(int j = -1; j < pair.getX() + 1; j ++){
+                Pair p = new Pair(pair.getX() + j, pair.getY() + i) ;
+
+                for(int q = 0; q < blockedSquares.size(); q ++){
+                    if(blockedSquares.get(q).getX() == p.getX()
+                            && blockedSquares.get(q).getY() == p.getY())
+                        return true;
+                }
+
+            }
+        }
+        return false;
     }
 
     private boolean find(ArrayList<Pair> blockedSquares, Pair pair) {

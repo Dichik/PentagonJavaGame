@@ -7,6 +7,7 @@ import game.pieces.Pentamimo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Collections;
 
 public class PauseMenu extends MainMenu {
 
@@ -41,6 +42,7 @@ public class PauseMenu extends MainMenu {
                     Game.STATE_MANAGER.clearStack();
                     Game.STATE_MANAGER.changeState(new MainMenu());
                     Pentamimo.USED = 0;
+                    Collections.shuffle(Pentamimo.LIST);
                 }
             }
         } else if (key == KeyEvent.VK_ESCAPE) {

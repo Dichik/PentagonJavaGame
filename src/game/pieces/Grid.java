@@ -328,7 +328,7 @@ public class Grid {
         for (int i = 0; i < SIZE - 1; i++) {
             for (int j = 0; j < SIZE - 1; j++) {
                 if (getLine(i)[j] != null) {
-                    if (getLine(i)[j].isFixed())
+                    if (getLine(i)[j].isFixed() && !getLine(i)[j].getColor().equals("blue"))
                         matrix[i][j] = 1;
                     else matrix[i][j] = 0;
                 } else matrix[i][j] = 0;

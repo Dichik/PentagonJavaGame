@@ -24,6 +24,13 @@ public class Solution {
         }
     }
 
+    public int[][] getSolution() {
+        if (foundSolution()) {
+            return matrix;
+        }
+        return null;
+    }
+
     public boolean foundSolution() {
         return hasSolution;
     }
@@ -32,10 +39,10 @@ public class Solution {
         hasSolution = found;
     }
 
-    public void drawSolution(){
-        if(hasSolution){
-            for(int i = 0; i < SIZE - 1; i ++){
-                for(int j = 0; j < SIZE - 1; j ++){
+    public void drawSolution() {
+        if (hasSolution) {
+            for (int i = 0; i < SIZE - 1; i++) {
+                for (int j = 0; j < SIZE - 1; j++) {
                     System.out.print(matrix[i][j] + " ");
                 }
                 System.out.print("\n");
@@ -56,12 +63,12 @@ public class Solution {
 
 
     private void foundPlaceForPentamimo(ArrayList<Pentamimo> list, int x, int[][] res) {
-        if (hasSolution) {
+        if (foundSolution()) {
             return;
         }
         if (x == 12) {
             matrix = res;
-            hasSolution = true;
+            solutionFound(true);
             return;
         }
 
