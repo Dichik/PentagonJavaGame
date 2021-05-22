@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.stream.IntStream;
 
 import framework.display.Window;
 import game.pieces.Pentamimo;
@@ -109,29 +110,6 @@ public class PlayingState extends GameState {
         }
     }
 
-    private void createBlockedSquares() {
-        int BLOCKED_PIECES = 10;
-        for (int i = 0; i < BLOCKED_PIECES; i++) {
-            Pair pair = new Pair(Math.abs(new Random().nextInt() % Grid.SIZE),
-                    Math.abs(new Random().nextInt() % Grid.SIZE));
-            if (!find(blockedSquares, pair)) {
-                blockedSquares.add(pair);
-                this.grid.getLine(pair.getY())[pair.getX()] = new Square("blue");
-                this.grid.getLine(pair.getY())[pair.getX()].setFixed();
-                this.grid.getLine(pair.getY())[pair.getX()].setStopping();
-            } else i--;
-        }
-    }
-
-    private boolean find(ArrayList<Pair> blockedSquares, Pair pair) {
-        for (int i = 0; i < blockedSquares.size(); i++) {
-            if (pair.equals(blockedSquares.get(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_RIGHT) {
@@ -174,14 +152,37 @@ public class PlayingState extends GameState {
         }
     }
 
+    @Override
+    public void keyReleased(int key) {
+    }
+
     public static Object[] getReversed(int[] arr) {
         List<int[]> list = Arrays.asList(arr);
         Collections.reverse(list);
         return list.toArray();
     }
 
-    @Override
-    public void keyReleased(int key) {
+    private void createBlockedSquares() {
+        int BLOCKED_PIECES = 10;
+        for (int i = 0; i < BLOCKED_PIECES; i++) {
+            Pair pair = new Pair(Math.abs(new Random().nextInt() % Grid.SIZE),
+                    Math.abs(new Random().nextInt() % Grid.SIZE));
+            if (!find(blockedSquares, pair)) {
+                blockedSquares.add(pair);
+                this.grid.getLine(pair.getY())[pair.getX()] = new Square("blue");
+                this.grid.getLine(pair.getY())[pair.getX()].setFixed();
+                this.grid.getLine(pair.getY())[pair.getX()].setStopping();
+            } else i--;
+        }
+    }
+
+    private boolean find(ArrayList<Pair> blockedSquares, Pair pair) {
+        for (int i = 0; i < blockedSquares.size(); i++) {
+            if (pair.equals(blockedSquares.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void stopPieces() {
@@ -221,20 +222,43 @@ public class PlayingState extends GameState {
         graphics.setColor(new Color(212, 206, 206));
         graphics.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 
-        graphics.setColor(Color.BLACK);
-        graphics.drawRect(760, 15, 200, 537);
         graphics.setColor(new Color(175, 175, 175));
         graphics.fillRect(761, 16, 199, 536);
 
         graphics.setColor(Color.BLACK);
-        graphics.drawLine(760, 32, 960, 32);
-        graphics.drawLine(760, 190, 960, 190);
-        graphics.drawLine(760, 375, 960, 375);
+        graphics.drawRect(760, 15, 200, 537);
+
+        int[] ys = {32, 190, 375} ;
+        for(int i = 0; i < ys.length; i ++){
+            graphics.drawLine(760, ys[i], 960, ys[i]);
+        }
 
         graphics.setFont(new Font("Roboto", Font.ITALIC + Font.BOLD, 16));
         graphics.drawString("Next:", 820, 30);
 
         graphics.drawRect(70, 70, 420, 420);
+
+        drawHowToPlay(graphics);
+    }
+
+    private void drawHowToPlay(Graphics graphics) {
+        String[] buttons = {
+                "SPACE - rotate figure",
+                "H - get a tip",
+                "ESC - pause the game",
+                "S - get a solution",
+                "Move pieces with arrows"
+        } ;
+        graphics.drawString("Press button:\n", 550, 200);
+        graphics.drawLine(550,205, 650,205);
+        graphics.drawLine(550,370, 750,370);
+
+        IntStream.range(0, buttons.length)
+                .forEach(i -> graphics.drawString(buttons[i], 550, 250 + i * 25));
+        IntStream.range(0, 5).forEach(i -> {
+            graphics.drawOval(535, 240 + 25 * i, 5, 5);
+            graphics.fillOval(535, 240 + 25 * i, 5, 5);
+        });
     }
 
     private String countSquares(int x, boolean line) {
